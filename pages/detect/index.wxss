@@ -1,0 +1,27 @@
+@import "../../styles/tokens.wxss";
+
+.nav-slot { display: flex; align-items: center; justify-content: center; height: 72rpx; min-width: 72rpx; }
+.scanner-head { padding: 14rpx 4rpx 22rpx; }
+.scanner-title { display: block; color: #0b1f3a; font-size: 44rpx; font-weight: 900; line-height: 54rpx; }
+.scanner-subtitle { display: block; margin-top: 12rpx; color: #64748b; font-size: 26rpx; line-height: 38rpx; }
+.type-tabs { display: flex; padding: 8rpx; border-radius: 24rpx; background: #eaf1ff; }
+.type-tab { display: flex; align-items: center; justify-content: center; flex: 1; height: 64rpx; border-radius: 18rpx; color: #506174; font-size: 24rpx; font-weight: 800; }
+.type-tab-active { color: #0b1f3a; background: #ffffff; box-shadow: 0 6rpx 18rpx rgba(11, 31, 58, 0.08); }
+.scan-input-panel { margin-top: 22rpx; padding: 24rpx; border-radius: 28rpx; }
+.main-input { width: 100%; min-height: 280rpx; color: #0b1f3a; font-size: 29rpx; line-height: 42rpx; }
+.input-placeholder { color: #8ca0bb; }
+.single-input { width: 100%; height: 88rpx; padding: 0 22rpx; border-radius: 22rpx; color: #0b1f3a; background: #f5f8ff; font-size: 28rpx; }
+.upload-box { display: flex; align-items: center; justify-content: center; flex-direction: column; min-height: 280rpx; border: 2rpx dashed #9db8ff; border-radius: 24rpx; background: #f5f8ff; }
+.upload-title { color: #0b1f3a; font-size: 30rpx; font-weight: 800; }
+.upload-desc { margin-top: 8rpx; color: #64748b; font-size: 24rpx; }
+.privacy-bar { margin-top: 20rpx; padding: 18rpx 20rpx; border-radius: 18rpx; color: #174d3c; background: #e8fff6; font-size: 23rpx; line-height: 32rpx; }
+.scan-progress { margin-top: 22rpx; padding: 22rpx; border-radius: 28rpx; }
+.scan-visual { position: relative; height: 136rpx; border-radius: 22rpx; background: #0b1f3a; overflow: hidden; }
+.scan-line { position: absolute; top: 20rpx; left: 0; width: 100%; height: 8rpx; border-radius: 8rpx; background: #21c58b; box-shadow: 0 0 30rpx rgba(33, 197, 139, 0.8); animation: scanMove 980ms ease-in-out infinite; }
+@keyframes scanMove { from { transform: translateY(0); } to { transform: translateY(88rpx); } }
+.step-list { margin-top: 18rpx; }
+.step-item { display: flex; align-items: center; height: 48rpx; color: #64748b; font-size: 25rpx; font-weight: 700; }
+.step-dot { width: 16rpx; height: 16rpx; margin-right: 14rpx; border-radius: 16rpx; background: #c8d6ee; }
+.step-done { color: #0b1f3a; }
+.step-done .step-dot { background: #21c58b; }
+.primary-button { display: flex; align-items: center; justify-content: center; height: 96rpx; margin-top: 26rpx; border-radius: 28rpx; color: #ffffff; background: #1e63ff; box-shadow: 0 16rpx 32rpx rgba(30, 99, 255, 0.24); font-size: 30rpx; font-weight: 900; }

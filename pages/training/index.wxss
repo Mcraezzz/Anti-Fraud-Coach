@@ -1,0 +1,26 @@
+@import "../../styles/tokens.wxss";
+.nav-slot { display: flex; align-items: center; justify-content: center; height: 72rpx; min-width: 72rpx; }
+.camp-card { min-height: 260rpx; padding: 30rpx; border-radius: 34rpx; color: #ffffff; background: linear-gradient(135deg, #0b1f3a 0%, #123d77 100%); box-shadow: 0 24rpx 48rpx rgba(11, 31, 58, 0.16); }
+.camp-title { display: block; font-size: 44rpx; font-weight: 900; line-height: 54rpx; }
+.camp-subtitle { display: block; margin-top: 12rpx; color: #dce7ff; font-size: 26rpx; }
+.task-bar { display: flex; justify-content: space-between; margin-top: 34rpx; padding: 20rpx; border-radius: 22rpx; background: rgba(255, 255, 255, 0.08); font-size: 24rpx; font-weight: 800; }
+.scenario-grid { display: flex; flex-wrap: wrap; margin-top: 18rpx; margin-left: -14rpx; }
+.scenario-card { width: calc(50% - 14rpx); min-height: 206rpx; margin-left: 14rpx; margin-bottom: 14rpx; padding: 22rpx; border-radius: 26rpx; }
+.scenario-icon { width: 58rpx; height: 58rpx; border-radius: 20rpx; background: #eaf1ff; }
+.scenario-red { background: #fff0f0; }
+.scenario-amber { background: #fff3db; }
+.scenario-blue { background: #eaf1ff; }
+.scenario-title { display: block; margin-top: 16rpx; color: #0b1f3a; font-size: 29rpx; font-weight: 900; }
+.scenario-level { display: block; margin-top: 8rpx; color: #64748b; font-size: 23rpx; }
+.scenario-track { height: 10rpx; margin-top: 16rpx; border-radius: 10rpx; background: #edf3ff; overflow: hidden; }
+.scenario-fill { height: 10rpx; border-radius: 10rpx; }
+.fill-red { background: #ff4d4f; }
+.fill-amber { background: #ff9f1c; }
+.fill-blue { background: #1e63ff; }
+.challenge-card { margin-top: 14rpx; padding: 24rpx; border-radius: 28rpx; }
+.challenge-title { display: block; color: #0b1f3a; font-size: 31rpx; font-weight: 900; }
+.message-box { margin-top: 16rpx; padding: 22rpx; border-radius: 24rpx; color: #0b1f3a; background: #f5f8ff; font-size: 27rpx; line-height: 42rpx; }
+.choice-row { display: flex; flex-wrap: wrap; margin-top: 18rpx; margin-left: -12rpx; }
+.choice { margin-left: 12rpx; margin-bottom: 10rpx; padding: 14rpx 20rpx; border-radius: 22rpx; font-size: 24rpx; font-weight: 800; }
+.choice-danger { color: #9f1d25; background: #fff0f0; }
+.choice-safe { color: #174d3c; background: #e8fff6; }

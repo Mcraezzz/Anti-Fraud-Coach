@@ -1,0 +1,19 @@
+<view class="page-shell">
+  <mp-navigation-bar title="校园安全数据驾驶舱" background="#f5f8ff" color="#0B1F3A" />
+  <scroll-view class="admin-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="content">
+      <view class="dashboard-head">
+        <brand-logo size="mini" show-name="{{false}}" />
+        <view class="dashboard-copy"><text class="dashboard-title">高校专业应用后台</text><text class="dashboard-subtitle">训练完成率、易错排行、高风险统计与教育建议</text></view>
+      </view>
+      <view class="metric-grid">
+        <view wx:for="{{metrics}}" wx:key="label" class="metric-card metric-{{item.tone}}"><text class="metric-value">{{item.value}}</text><text class="metric-label">{{item.label}}</text></view>
+      </view>
+      <view class="chart-card hairline-card">
+        <text class="chart-title">易错类型排行</text>
+        <view wx:for="{{wrongTypes}}" wx:key="label" class="bar-row"><text class="bar-label">{{item.label}}</text><view class="bar-track"><view class="bar-fill" style="width: {{item.value}}%;"></view></view><text class="bar-value">{{item.value}}%</text></view>
+      </view>
+      <view class="advice-card"><text class="advice-title">教育建议</text><text class="advice-body">本班近期对“冒充客服”识别较弱，建议开展 10 分钟案例复盘。</text></view>
+    </view>
+  </scroll-view>
+</view>

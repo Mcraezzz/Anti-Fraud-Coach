@@ -1,0 +1,30 @@
+<view class="page-shell">
+  <mp-navigation-bar title="识别结果" background="#f5f8ff" color="#0B1F3A" />
+  <scroll-view class="result-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="content">
+      <view class="risk-overview">
+        <view class="risk-top"><brand-logo size="mini" show-name="{{false}}" /><text class="risk-badge">高风险</text></view>
+        <view class="gauge"><text class="gauge-score">87</text><text class="gauge-label">风险评分 / 100</text></view>
+        <view class="risk-meta">
+          <view><text class="meta-label">疑似类型</text><text class="meta-value">刷单返利 / 虚假兼职</text></view>
+          <view><text class="meta-label">置信度</text><text class="meta-value">92%</text></view>
+        </view>
+      </view>
+      <view class="result-card hairline-card">
+        <text class="card-title">发现 4 个可疑风险点</text>
+        <view class="signal-row"><text wx:for="{{signals}}" wx:key="label" class="pill pill-{{item.tone}}">{{item.label}}</text></view>
+      </view>
+      <view class="result-card hairline-card">
+        <text class="card-title">证据高亮</text>
+        <view class="evidence-box"><text>“需要你</text><text class="highlight-red">先垫付 300 元保证金</text><text>，完成任务后</text><text class="highlight-amber">马上返现</text><text>，不要告诉其他人。”</text></view>
+        <view class="explain-box"><text>“先支付费用”是刷单、兼职、贷款类骗局的高频特征。</text></view>
+      </view>
+      <view class="result-card hairline-card">
+        <text class="card-title">建议动作</text>
+        <view wx:for="{{actions}}" wx:key="*this" class="action-item"><view class="action-dot"></view><text>{{item}}</text></view>
+      </view>
+      <view class="source-card"><text class="source-title">参考依据</text><text class="source-line">校园兼职诈骗防范条目 · 刷单返利典型案例 · 知识库版本 v1.0</text></view>
+      <view class="training-cta" bind:tap="goTraining"><text>进入同类情景训练</text></view>
+    </view>
+  </scroll-view>
+</view>

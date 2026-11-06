@@ -1,0 +1,262 @@
+@import "../../styles/tokens.wxss";
+
+.nav-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 72rpx;
+  min-width: 72rpx;
+}
+
+.coach-hero {
+  position: relative;
+  min-height: 470rpx;
+  padding: 30rpx;
+  border-radius: 34rpx;
+  color: #ffffff;
+  background: linear-gradient(135deg, #0b1f3a 0%, #123d77 58%, #1e63ff 100%);
+  overflow: hidden;
+  box-shadow: 0 24rpx 48rpx rgba(11, 31, 58, 0.18);
+}
+
+.hero-grid {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: linear-gradient(rgba(220, 231, 255, 0.1) 1rpx, transparent 1rpx), linear-gradient(90deg, rgba(220, 231, 255, 0.1) 1rpx, transparent 1rpx);
+  background-size: 42rpx 42rpx;
+}
+
+.hero-top,
+.hero-brand,
+.security-row,
+.hero-metric {
+  display: flex;
+  align-items: center;
+}
+
+.hero-top {
+  position: relative;
+  z-index: 1;
+  justify-content: space-between;
+}
+
+.hero-brand-copy {
+  margin-left: 18rpx;
+}
+
+.hero-brand-name,
+.hero-brand-tagline,
+.hero-title,
+.score-number,
+.score-label,
+.metric-value,
+.metric-label {
+  display: block;
+}
+
+.hero-brand-name {
+  color: #ffffff;
+  font-size: 38rpx;
+  font-weight: 900;
+  line-height: 44rpx;
+}
+
+.hero-brand-tagline {
+  margin-top: 6rpx;
+  color: #dce7ff;
+  font-size: 23rpx;
+}
+
+.radar-orb {
+  position: relative;
+  flex: none;
+  width: 116rpx;
+  height: 116rpx;
+  border: 2rpx solid rgba(220, 231, 255, 0.55);
+  border-radius: 116rpx;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.radar-orb::after {
+  position: absolute;
+  top: 48rpx;
+  right: 48rpx;
+  bottom: 48rpx;
+  left: 48rpx;
+  border-radius: 100%;
+  background: #21c58b;
+  content: "";
+}
+
+.radar-line {
+  position: absolute;
+  top: 56rpx;
+  left: 56rpx;
+  width: 48rpx;
+  height: 4rpx;
+  border-radius: 4rpx;
+  background: #7db7ff;
+  transform: rotate(-28deg);
+  transform-origin: 0 50%;
+}
+
+.hero-title {
+  position: relative;
+  z-index: 1;
+  margin-top: 36rpx;
+  color: #eaf1ff;
+  font-size: 30rpx;
+  font-weight: 700;
+  line-height: 44rpx;
+}
+
+.security-row {
+  position: relative;
+  z-index: 1;
+  margin-top: 34rpx;
+}
+
+.score-ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex: none;
+  width: 150rpx;
+  height: 150rpx;
+  border: 10rpx solid rgba(33, 197, 139, 0.9);
+  border-left-color: rgba(220, 231, 255, 0.36);
+  border-radius: 150rpx;
+}
+
+.score-number {
+  color: #ffffff;
+  font-size: 42rpx;
+  font-weight: 900;
+}
+
+.score-label {
+  color: #dce7ff;
+  font-size: 20rpx;
+}
+
+.hero-metrics {
+  flex: 1;
+  margin-left: 24rpx;
+}
+
+.hero-metric {
+  justify-content: space-between;
+  min-height: 64rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid rgba(220, 231, 255, 0.2);
+  border-radius: 18rpx;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.hero-metric + .hero-metric {
+  margin-top: 14rpx;
+}
+
+.metric-value {
+  color: #ffffff;
+  font-size: 30rpx;
+  font-weight: 800;
+}
+
+.metric-label {
+  color: #dce7ff;
+  font-size: 22rpx;
+}
+
+.scan-panel {
+  margin-top: 24rpx;
+  padding: 24rpx;
+  border-radius: 28rpx;
+}
+
+.privacy-note {
+  color: #21c58b;
+  font-size: 24rpx;
+  font-weight: 800;
+}
+
+.scan-grid,
+.feature-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 18rpx;
+  margin-left: -14rpx;
+}
+
+.scan-card,
+.feature-card {
+  width: calc(50% - 14rpx);
+  margin-left: 14rpx;
+  margin-bottom: 14rpx;
+  border-radius: 22rpx;
+}
+
+.scan-card {
+  display: flex;
+  align-items: center;
+  min-height: 124rpx;
+  padding: 20rpx;
+  background: #f5f8ff;
+}
+
+.scan-title,
+.feature-title {
+  display: block;
+  color: #0b1f3a;
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.scan-desc,
+.feature-desc {
+  display: block;
+  margin-top: 6rpx;
+  color: #64748b;
+  font-size: 22rpx;
+}
+
+.feature-card {
+  min-height: 132rpx;
+  padding: 22rpx;
+}
+
+.feature-icon {
+  flex: none;
+  width: 56rpx;
+  height: 56rpx;
+  margin-right: 16rpx;
+  border-radius: 18rpx;
+  background: #eaf1ff;
+}
+
+.warning-card {
+  margin-top: 14rpx;
+  padding: 24rpx;
+  border: 1rpx solid #ffe0ad;
+  border-radius: 26rpx;
+  background: #fff8ec;
+}
+
+.warning-title {
+  display: block;
+  color: #7a4705;
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.warning-body {
+  display: block;
+  margin-top: 10rpx;
+  color: #6d5a3b;
+  font-size: 24rpx;
+  line-height: 36rpx;
+}

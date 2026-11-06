@@ -1,0 +1,15 @@
+{
+  "appid": "touristappid",
+  "projectname": "anti-fraud-coach-design",
+  "description": "Anti-Fraud Coach Skyline mini program design prototype",
+  "compileType": "miniprogram",
+  "miniprogramRoot": "./",
+  "setting": {
+    "skylineRenderEnable": true,
+    "es6": true,
+    "postcss": true,
+    "minified": false,
+    "enhance": true
+  },
+  "condition": {}
+}

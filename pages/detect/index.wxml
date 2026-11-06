@@ -1,0 +1,43 @@
+<view class="page-shell">
+  <mp-navigation-bar title="智能风险识别" background="#f5f8ff" color="#0B1F3A">
+    <view slot="left" class="nav-slot"><brand-logo size="mini" show-name="{{false}}" /></view>
+  </mp-navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="content">
+      <view class="scanner-head">
+        <text class="scanner-title">AI 扫描台</text>
+        <text class="scanner-subtitle">支持聊天文本、截图 OCR、可疑链接和短信内容分析。</text>
+      </view>
+
+      <view class="type-tabs">
+        <view wx:for="{{tabs}}" wx:key="key" class="type-tab {{activeType === item.key ? 'type-tab-active' : ''}}" data-type="{{item.key}}" bind:tap="switchType">
+          <text>{{item.label}}</text>
+        </view>
+      </view>
+
+      <view class="scan-input-panel hairline-card">
+        <textarea wx:if="{{activeType === 'text' || activeType === 'sms'}}" class="main-input" maxlength="800" placeholder="粘贴可疑聊天或短信内容，系统会识别风险信号。" placeholder-class="input-placeholder" />
+        <view wx:elif="{{activeType === 'image'}}" class="upload-box">
+          <text class="upload-title">上传聊天截图</text>
+          <text class="upload-desc">正在进行 OCR 文字识别后扫描风险信号</text>
+        </view>
+        <input wx:else class="single-input" placeholder="粘贴可疑链接，如短链、下载页、交易页" placeholder-class="input-placeholder" />
+        <view class="privacy-bar"><text>敏感信息将自动脱敏 · 最小化存储 · 本结果仅作风险辅助判断</text></view>
+      </view>
+
+      <view wx:if="{{scanning}}" class="scan-progress hairline-card">
+        <view class="scan-visual"><view class="scan-line"></view></view>
+        <view class="step-list">
+          <view wx:for="{{steps}}" wx:key="label" class="step-item {{item.done ? 'step-done' : ''}}">
+            <view class="step-dot"></view><text>{{item.label}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="primary-button" bind:tap="startScan"><text>{{scanning ? '正在扫描风险信号' : '开始智能识别'}}</text></view>
+    </view>
+  </scroll-view>
+
+  <mp-tabbar class="bottom-tabbar" list="{{tabbarList}}" current="{{currentTab}}" bindchange="onTabChange" />
+</view>

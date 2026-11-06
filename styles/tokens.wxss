@@ -1,0 +1,100 @@
+.tone-primary {
+  color: #1e63ff;
+}
+
+.tone-safe {
+  color: #21c58b;
+}
+
+.tone-amber {
+  color: #ff9f1c;
+}
+
+.tone-danger {
+  color: #ff4d4f;
+}
+
+.tone-ink {
+  color: #0b1f3a;
+}
+
+.surface {
+  background: #ffffff;
+}
+
+.surface-soft {
+  background: #f5f8ff;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48rpx;
+  padding: 0 20rpx;
+  border-radius: 24rpx;
+  color: #0b3f9c;
+  background: #eaf1ff;
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.pill-safe {
+  color: #174d3c;
+  background: #e8fff6;
+}
+
+.pill-amber {
+  color: #7a4705;
+  background: #fff3db;
+}
+
+.pill-red {
+  color: #9f1d25;
+  background: #fff0f0;
+}
+
+.pill-gray {
+  color: #506174;
+  background: #edf3ff;
+}
+
+.risk-low {
+  color: #21c58b;
+}
+
+.risk-mid {
+  color: #ff9f1c;
+}
+
+.risk-high {
+  color: #ff4d4f;
+}
+
+.micro-icon {
+  position: relative;
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.micro-icon-user::before {
+  position: absolute;
+  top: 4rpx;
+  left: 10rpx;
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 12rpx;
+  background: #0b1f3a;
+  content: "";
+}
+
+.micro-icon-user::after {
+  position: absolute;
+  right: 6rpx;
+  bottom: 4rpx;
+  left: 6rpx;
+  height: 14rpx;
+  border-radius: 16rpx 16rpx 8rpx 8rpx;
+  background: #0b1f3a;
+  content: "";
+}

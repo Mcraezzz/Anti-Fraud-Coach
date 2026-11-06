@@ -1,0 +1,34 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/detect/index",
+    "pages/result/index",
+    "pages/qa/index",
+    "pages/training/index",
+    "pages/report/index",
+    "pages/profile/index",
+    "pages/admin/index"
+  ],
+  "window": {
+    "navigationStyle": "custom",
+    "backgroundColor": "#F5F8FF",
+    "backgroundTextStyle": "dark"
+  },
+  "renderer": "skyline",
+  "componentFramework": "glass-easel",
+  "lazyCodeLoading": "requiredComponents",
+  "rendererOptions": {
+    "skyline": {
+      "defaultDisplayBlock": true,
+      "defaultContentBox": true,
+      "tagNameStyleIsolation": "legacy",
+      "enableScrollViewAutoSize": true,
+      "disableABTest": true
+    }
+  },
+  "useExtendedLib": {
+    "weui": true
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,86 @@
+@import "./styles/tokens.wxss";
+
+page {
+  min-height: 100vh;
+  background: #f5f8ff;
+  color: #0b1f3a;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+  font-size: 28rpx;
+}
+
+view,
+text,
+scroll-view {
+  box-sizing: border-box;
+}
+
+.page-shell {
+  min-height: 100vh;
+  background: #f5f8ff;
+}
+
+.page-scroll {
+  height: calc(100vh - 176rpx);
+}
+
+.content {
+  padding: 24rpx 28rpx 132rpx;
+}
+
+.section {
+  margin-top: 28rpx;
+}
+
+.section-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 56rpx;
+}
+
+.section-title {
+  color: #0b1f3a;
+  font-size: 34rpx;
+  font-weight: 700;
+  line-height: 44rpx;
+}
+
+.section-link {
+  color: #1e63ff;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+.muted {
+  color: #64748b;
+}
+
+.bottom-tabbar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+  box-shadow: 0 -12rpx 32rpx rgba(11, 31, 58, 0.08);
+}
+
+.hairline-card {
+  border: 1rpx solid #dce7ff;
+  background: #ffffff;
+  box-shadow: 0 10rpx 28rpx rgba(11, 31, 58, 0.06);
+}
+
+@keyframes afcFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.anim-fade-up {
+  animation: afcFadeUp 260ms ease forwards;
+}

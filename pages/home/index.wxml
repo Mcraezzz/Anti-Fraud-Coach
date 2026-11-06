@@ -1,0 +1,70 @@
+<view class="page-shell">
+  <mp-navigation-bar title="AI 反诈教练" back="{{false}}" background="#f5f8ff" color="#0B1F3A">
+    <view slot="left" class="nav-slot"><brand-logo size="mini" show-name="{{false}}" /></view>
+  </mp-navigation-bar>
+
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="content">
+      <view class="coach-hero">
+        <view class="hero-grid"></view>
+        <view class="hero-top">
+          <view class="hero-brand">
+            <brand-logo size="large" show-name="{{false}}" />
+            <view class="hero-brand-copy">
+              <text class="hero-brand-name">Anti-Fraud Coach</text>
+              <text class="hero-brand-tagline">AI 反诈情景识别与训练助手</text>
+            </view>
+          </view>
+          <view class="radar-orb"><view class="radar-line"></view></view>
+        </view>
+        <text class="hero-title">识别可疑话术 · 解释风险依据 · 训练反诈能力</text>
+        <view class="security-row">
+          <view class="score-ring">
+            <text class="score-number">86</text>
+            <text class="score-label">安全指数</text>
+          </view>
+          <view class="hero-metrics">
+            <view class="hero-metric"><text class="metric-value">12 次</text><text class="metric-label">已识别风险</text></view>
+            <view class="hero-metric"><text class="metric-value">70%</text><text class="metric-label">本周训练进度</text></view>
+          </view>
+        </view>
+      </view>
+
+      <view class="scan-panel hairline-card">
+        <view class="section-title-row">
+          <text class="section-title">立即检测可疑信息</text>
+          <text class="privacy-note">自动脱敏</text>
+        </view>
+        <view class="scan-grid">
+          <view wx:for="{{scanEntrances}}" wx:key="type" class="scan-card" data-type="{{item.type}}" bind:tap="goDetect">
+            <view class="feature-icon feature-icon-{{item.icon}}"></view>
+            <view>
+              <text class="scan-title">{{item.title}}</text>
+              <text class="scan-desc">{{item.desc}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="section">
+        <view class="section-title-row">
+          <text class="section-title">安全训练闭环</text>
+          <text class="section-link">识别 → 解释 → 训练 → 评估</text>
+        </view>
+        <view class="feature-grid">
+          <view wx:for="{{quickFeatures}}" wx:key="title" class="feature-card hairline-card" data-tab="{{item.tab}}" bind:tap="goFeature">
+            <text class="feature-title">{{item.title}}</text>
+            <text class="feature-desc">{{item.desc}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="warning-card">
+        <text class="warning-title">本周易错类型：虚假兼职</text>
+        <text class="warning-body">涉及转账、验证码、屏幕共享、脱离平台交易时，请先核实。系统仅作风险辅助判断，不作法律定性。</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <mp-tabbar class="bottom-tabbar" list="{{tabbarList}}" current="{{currentTab}}" bindchange="onTabChange" />
+</view>

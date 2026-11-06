@@ -1,0 +1,27 @@
+<view class="page-shell">
+  <mp-navigation-bar title="我的" back="{{false}}" background="#f5f8ff" color="#0B1F3A">
+    <view slot="left" class="nav-slot"><brand-logo size="mini" show-name="{{false}}" /></view>
+  </mp-navigation-bar>
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="content">
+      <view class="profile-card">
+        <brand-logo size="large" name="Anti-Fraud Coach" tagline="AI 反诈教练" />
+        <text class="profile-note">冷静可信的校园 AI 安全教练，帮助你识别、解释、训练和复盘反诈能力。</text>
+      </view>
+      <view class="admin-card" bind:tap="openAdmin">
+        <view><text class="admin-title">管理后台</text><text class="admin-desc">辅导员 / 管理员查看班级训练数据</text></view>
+        <text class="admin-arrow">›</text>
+      </view>
+      <view class="section">
+        <view class="section-title-row"><text class="section-title">账户与安全</text></view>
+        <view class="settings-list">
+          <view wx:for="{{settings}}" wx:key="title" class="setting-cell hairline-card">
+            <view><text class="setting-title">{{item.title}}</text><text class="setting-desc">{{item.desc}}</text></view>
+            <text class="setting-arrow">›</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <mp-tabbar class="bottom-tabbar" list="{{tabbarList}}" current="{{currentTab}}" bindchange="onTabChange" />
+</view>

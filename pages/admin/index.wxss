@@ -1,0 +1,25 @@
+.admin-scroll { height: calc(100vh - 88rpx); }
+.dashboard-head { display: flex; align-items: center; padding: 26rpx; border-radius: 30rpx; color: #ffffff; background: linear-gradient(135deg, #0b1f3a 0%, #123d77 100%); box-shadow: 0 24rpx 48rpx rgba(11, 31, 58, 0.16); }
+.dashboard-copy { margin-left: 18rpx; }
+.dashboard-title, .dashboard-subtitle { display: block; }
+.dashboard-title { font-size: 32rpx; font-weight: 900; }
+.dashboard-subtitle { margin-top: 8rpx; color: #dce7ff; font-size: 23rpx; line-height: 34rpx; }
+.metric-grid { display: flex; flex-wrap: wrap; margin-top: 22rpx; margin-left: -14rpx; }
+.metric-card { width: calc(50% - 14rpx); min-height: 140rpx; margin-left: 14rpx; margin-bottom: 14rpx; padding: 22rpx; border-radius: 26rpx; background: #ffffff; box-shadow: 0 10rpx 28rpx rgba(11, 31, 58, 0.06); }
+.metric-value { display: block; font-size: 42rpx; font-weight: 900; }
+.metric-label { display: block; margin-top: 10rpx; color: #64748b; font-size: 24rpx; }
+.metric-blue .metric-value { color: #1e63ff; }
+.metric-safe .metric-value { color: #21c58b; }
+.metric-red .metric-value { color: #ff4d4f; }
+.metric-amber .metric-value { color: #ff9f1c; }
+.chart-card { margin-top: 12rpx; padding: 24rpx; border-radius: 28rpx; }
+.chart-title { display: block; color: #0b1f3a; font-size: 30rpx; font-weight: 900; }
+.bar-row { display: flex; align-items: center; height: 64rpx; }
+.bar-label { width: 132rpx; color: #0b1f3a; font-size: 25rpx; font-weight: 800; }
+.bar-track { flex: 1; height: 12rpx; border-radius: 12rpx; background: #edf3ff; overflow: hidden; }
+.bar-fill { height: 12rpx; border-radius: 12rpx; background: #1e63ff; }
+.bar-value { width: 60rpx; color: #64748b; font-size: 24rpx; text-align: right; }
+.advice-card { margin-top: 22rpx; padding: 24rpx; border-radius: 28rpx; color: #174d3c; background: #e8fff6; }
+.advice-title, .advice-body { display: block; }
+.advice-title { font-size: 28rpx; font-weight: 900; }
+.advice-body { margin-top: 10rpx; font-size: 25rpx; line-height: 38rpx; }

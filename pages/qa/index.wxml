@@ -1,0 +1,33 @@
+<view class="page-shell">
+  <mp-navigation-bar title="AI 反诈顾问" back="{{false}}" background="#f5f8ff" color="#0B1F3A">
+    <view slot="left" class="nav-slot"><brand-logo size="mini" show-name="{{false}}" /></view>
+  </mp-navigation-bar>
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="content">
+      <view class="qa-head">
+        <text class="qa-title">基于知识库回答</text>
+        <text class="qa-subtitle">回答基于反诈知识库与相似案例，不作法律定性。</text>
+      </view>
+      <view class="prompt-row"><text wx:for="{{prompts}}" wx:key="*this" class="prompt-chip">{{item}}</text></view>
+      <view class="chat-card">
+        <view class="avatar">AI</view>
+        <view class="bubble">
+          <text class="answer-title">初步判断</text>
+          <text class="answer-text">该情况存在中高风险，主要风险点是脱离平台交易、先付款和要求保密。</text>
+          <text class="answer-title">为什么危险</text>
+          <view class="signal-row"><text class="pill pill-red">金钱诱导</text><text class="pill pill-amber">紧迫施压</text><text class="pill pill-red">脱离平台</text></view>
+          <text class="answer-title">建议怎么做</text>
+          <text class="answer-text">暂停付款，不提供验证码或银行卡信息，保留聊天记录，并向平台客服或辅导员核实。</text>
+        </view>
+      </view>
+      <view class="rag-card hairline-card">
+        <text class="rag-title">参考依据</text>
+        <text class="rag-line">校园兼职诈骗防范条目</text>
+        <text class="rag-line">刷单返利典型案例</text>
+        <text class="rag-version">知识库版本：v1.0 · 已记录来源</text>
+      </view>
+      <view class="question-box"><input class="question-input" placeholder="输入你的反诈问题" placeholder-class="input-placeholder" /><view class="send-button">发送</view></view>
+    </view>
+  </scroll-view>
+  <mp-tabbar class="bottom-tabbar" list="{{tabbarList}}" current="{{currentTab}}" bindchange="onTabChange" />
+</view>

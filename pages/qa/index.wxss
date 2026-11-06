@@ -1,0 +1,24 @@
+@import "../../styles/tokens.wxss";
+.nav-slot { display: flex; align-items: center; justify-content: center; height: 72rpx; min-width: 72rpx; }
+.qa-head { padding: 12rpx 4rpx 18rpx; }
+.qa-title { display: block; color: #0b1f3a; font-size: 42rpx; font-weight: 900; line-height: 54rpx; }
+.qa-subtitle { display: block; margin-top: 10rpx; color: #64748b; font-size: 26rpx; line-height: 38rpx; }
+.prompt-row { display: flex; flex-wrap: wrap; margin-left: -12rpx; }
+.prompt-chip { margin-left: 12rpx; margin-bottom: 12rpx; padding: 14rpx 18rpx; border-radius: 22rpx; color: #0b3f9c; background: #eaf1ff; font-size: 24rpx; font-weight: 700; }
+.chat-card { display: flex; margin-top: 18rpx; }
+.avatar { display: flex; align-items: center; justify-content: center; flex: none; width: 62rpx; height: 62rpx; border-radius: 20rpx; color: #ffffff; background: #1e63ff; font-size: 22rpx; font-weight: 900; }
+.bubble { flex: 1; min-width: 0; margin-left: 16rpx; padding: 24rpx; border: 1rpx solid #dce7ff; border-radius: 26rpx; background: #ffffff; box-shadow: 0 10rpx 28rpx rgba(11, 31, 58, 0.06); }
+.answer-title { display: block; margin-top: 18rpx; color: #0b1f3a; font-size: 28rpx; font-weight: 900; }
+.answer-title:first-child { margin-top: 0; }
+.answer-text { display: block; margin-top: 8rpx; color: #506174; font-size: 25rpx; line-height: 38rpx; }
+.signal-row { display: flex; flex-wrap: wrap; margin-top: 12rpx; margin-left: -10rpx; }
+.signal-row .pill { margin-left: 10rpx; margin-bottom: 10rpx; }
+.rag-card { margin-top: 22rpx; padding: 24rpx; border-radius: 28rpx; }
+.rag-title, .rag-line, .rag-version { display: block; }
+.rag-title { color: #0b1f3a; font-size: 30rpx; font-weight: 900; }
+.rag-line { margin-top: 12rpx; color: #506174; font-size: 25rpx; }
+.rag-version { margin-top: 16rpx; color: #1e63ff; font-size: 23rpx; font-weight: 800; }
+.question-box { display: flex; align-items: center; min-height: 92rpx; margin-top: 24rpx; padding: 10rpx; border: 1rpx solid #dce7ff; border-radius: 28rpx; background: #ffffff; }
+.question-input { flex: 1; min-width: 0; padding: 0 18rpx; color: #0b1f3a; font-size: 28rpx; }
+.input-placeholder { color: #8ca0bb; }
+.send-button { display: flex; align-items: center; justify-content: center; width: 112rpx; height: 72rpx; border-radius: 22rpx; color: #ffffff; background: #1e63ff; font-size: 26rpx; font-weight: 900; }

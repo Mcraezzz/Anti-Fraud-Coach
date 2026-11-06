@@ -1,0 +1,29 @@
+<view class="page-shell">
+  <mp-navigation-bar title="能力报告" back="{{false}}" background="#f5f8ff" color="#0B1F3A">
+    <view slot="left" class="nav-slot"><brand-logo size="mini" show-name="{{false}}" /></view>
+  </mp-navigation-bar>
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="content">
+      <view class="report-hero">
+        <text class="report-title">我的反诈能力报告</text>
+        <view class="score-row">
+          <view><text class="score-main">82</text><text class="score-desc">综合能力分</text></view>
+          <view class="level-pill">校园安全守护者</view>
+        </view>
+        <text class="week-up">本周提升 +12 分</text>
+      </view>
+      <view class="radar-card hairline-card"><image class="radar-image" src="/assets/illustrations/ability-radar.svg" mode="aspectFit" /></view>
+      <view class="ability-list">
+        <view wx:for="{{abilities}}" wx:key="label" class="ability-cell">
+          <text>{{item.label}}</text><view class="ability-track"><view class="ability-fill" style="width: {{item.value}}%;"></view></view><text>{{item.value}}</text>
+        </view>
+      </view>
+      <view class="result-card hairline-card">
+        <text class="card-title">最易错类型</text>
+        <view wx:for="{{weakTypes}}" wx:key="*this" class="rank-row"><text class="rank-index">{{index + 1}}</text><text>{{item}}</text></view>
+      </view>
+      <view class="suggest-card"><text class="suggest-title">系统建议</text><text class="suggest-body">优先完成“虚假兼职”和“脱离平台交易”训练，重点练习付款前核实与证据保存。</text></view>
+    </view>
+  </scroll-view>
+  <mp-tabbar class="bottom-tabbar" list="{{tabbarList}}" current="{{currentTab}}" bindchange="onTabChange" />
+</view>

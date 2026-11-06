@@ -1,0 +1,116 @@
+.brand {
+  display: flex;
+  align-items: center;
+}
+
+.brand-mark {
+  position: relative;
+  flex: none;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 24rpx;
+  background: #0b1f3a;
+  box-shadow: 0 12rpx 28rpx rgba(30, 99, 255, 0.24);
+  overflow: hidden;
+}
+
+.brand-shield {
+  position: absolute;
+  top: 16rpx;
+  left: 20rpx;
+  width: 40rpx;
+  height: 50rpx;
+  background: #1e63ff;
+  transform: rotate(45deg);
+}
+
+.brand-shield::after {
+  position: absolute;
+  top: 7rpx;
+  left: 7rpx;
+  width: 26rpx;
+  height: 36rpx;
+  border: 3rpx solid #dce7ff;
+  content: "";
+}
+
+.brand-radar {
+  position: absolute;
+  top: 15rpx;
+  left: 13rpx;
+  width: 54rpx;
+  height: 54rpx;
+  border-right: 5rpx solid #7db7ff;
+  border-radius: 54rpx;
+  transform: rotate(-22deg);
+}
+
+.brand-check {
+  position: absolute;
+  top: 38rpx;
+  left: 31rpx;
+  width: 20rpx;
+  height: 10rpx;
+  border-left: 6rpx solid #ffffff;
+  border-bottom: 6rpx solid #ffffff;
+  transform: rotate(-45deg);
+}
+
+.brand-node {
+  position: absolute;
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 10rpx;
+}
+
+.brand-node-a {
+  top: 18rpx;
+  left: 36rpx;
+  background: #ff4d4f;
+}
+
+.brand-node-b {
+  top: 30rpx;
+  left: 15rpx;
+  background: #ff9f1c;
+}
+
+.brand-node-c {
+  top: 30rpx;
+  right: 15rpx;
+  background: #21c58b;
+}
+
+.brand-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  margin-left: 18rpx;
+}
+
+.brand-name {
+  color: #0b1f3a;
+  font-size: 32rpx;
+  font-weight: 800;
+  line-height: 38rpx;
+}
+
+.brand-tagline {
+  margin-top: 4rpx;
+  color: #64748b;
+  font-size: 22rpx;
+  line-height: 26rpx;
+}
+
+.brand-mini .brand-mark {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 15rpx;
+}
+
+.brand-large .brand-mark {
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 32rpx;
+}

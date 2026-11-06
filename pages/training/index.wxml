@@ -1,0 +1,31 @@
+<view class="page-shell">
+  <mp-navigation-bar title="情景训练" back="{{false}}" background="#f5f8ff" color="#0B1F3A">
+    <view slot="left" class="nav-slot"><brand-logo size="mini" show-name="{{false}}" /></view>
+  </mp-navigation-bar>
+  <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="content">
+      <view class="camp-card">
+        <text class="camp-title">反诈训练营</text>
+        <text class="camp-subtitle">当前等级：Lv.3 风险识别新手</text>
+        <view class="task-bar"><text>今日任务：完成 3 个情景挑战</text><text>1 / 3</text></view>
+      </view>
+      <view class="section">
+        <view class="section-title-row"><text class="section-title">校园高频场景</text></view>
+        <view class="scenario-grid">
+          <view wx:for="{{scenarios}}" wx:key="title" class="scenario-card hairline-card">
+            <view class="scenario-icon scenario-{{item.tone}}"></view>
+            <text class="scenario-title">{{item.title}}</text>
+            <text class="scenario-level">{{item.level}} · 已完成 {{item.done}}%</text>
+            <view class="scenario-track"><view class="scenario-fill fill-{{item.tone}}" style="width: {{item.done}}%;"></view></view>
+          </view>
+        </view>
+      </view>
+      <view class="challenge-card hairline-card">
+        <text class="challenge-title">今日模拟题</text>
+        <view class="message-box"><text>“同学你好，兼职日结，先垫付 300 元保证金，完成后双倍返现，名额有限。”</text></view>
+        <view class="choice-row"><text class="choice choice-danger">点击链接</text><text class="choice choice-safe">核实身份</text><text class="choice choice-safe">保存证据</text></view>
+      </view>
+    </view>
+  </scroll-view>
+  <mp-tabbar class="bottom-tabbar" list="{{tabbarList}}" current="{{currentTab}}" bindchange="onTabChange" />
+</view>

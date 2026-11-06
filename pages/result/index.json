@@ -1,0 +1,8 @@
+{
+  "navigationStyle": "custom",
+  "disableScroll": true,
+  "usingComponents": {
+    "brand-logo": "/components/brand-logo/index",
+    "mp-navigation-bar": "weui-miniprogram/navigation-bar/navigation-bar"
+  }
+}

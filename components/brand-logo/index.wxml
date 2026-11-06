@@ -1,0 +1,14 @@
+<view class="brand brand-{{size}}">
+  <view class="brand-mark">
+    <view class="brand-shield"></view>
+    <view class="brand-radar"></view>
+    <view class="brand-node brand-node-a"></view>
+    <view class="brand-node brand-node-b"></view>
+    <view class="brand-node brand-node-c"></view>
+    <view class="brand-check"></view>
+  </view>
+  <view wx:if="{{showName}}" class="brand-copy">
+    <text class="brand-name">{{name}}</text>
+    <text class="brand-tagline">{{tagline}}</text>
+  </view>
+</view>
