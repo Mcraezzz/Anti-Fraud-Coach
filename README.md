@@ -1,11 +1,183 @@
-# Anti-Fraud Coach Mini Program Design
+# Campus Anti-Fraud RAG System
 
-Skyline-first WeChat Mini Program prototype for a university-facing AI anti-fraud safety coach.
+This project is a bilingual RAG prototype for the coursework topic:
 
-Core loop:
+**An LLM-RAG Based Anti-Fraud Media Content Recognition and Training System for College Students**
 
-`risk recognition -> explainable evidence -> RAG Q&A -> scenario training -> ability report -> admin dashboard`
+The system accepts Chinese, English, mixed fraud-related media text, or uploaded screenshots/images and returns:
 
-Open this folder in WeChat DevTools:
+- fraud risk level
+- fraud type
+- independent risk feature extraction
+- OCR text extracted from uploaded images
+- key risk signals
+- retrieved evidence
+- evidence fusion and reranking scores
+- anti-fraud advice
+- training question
+- compliance reminder
+- structured JSON for evaluation
 
-`C:\Users\22672\Documents\CRAIC`
+## Data Sources
+
+Default dataset root:
+
+`D:\CARIC模型&数据集\datasets`
+
+Main sources used by the index builder:
+
+- `campus_anti_fraud_bilingual_rules`
+- `ChiFraud`
+- `hf_notd5a_malicious-benign-sms-mms-dataset`
+- `hf_wangyuancheng_discord-phishing-scam-clean`
+- `hf_weijianzhg_email-safety-triage-10k`
+- `github_Phishing-Database_Phishing.Database`
+- `hf_phishdestroy_destroylist`
+- `github_scamsniffer_scam-database`
+
+## Setup
+
+Install dependencies:
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+Set the Qwen API key as an environment variable:
+
+```powershell
+$env:DASHSCOPE_API_KEY="sk-your-api-key-here"
+```
+
+Optional settings:
+
+```powershell
+$env:DASHSCOPE_BASE_URL="https://dashscope.aliyuncs.com/compatible-mode/v1"
+$env:QWEN_MODEL="qwen3.7-plus"
+```
+
+## Retrieval Architecture
+
+The current system uses:
+
+```text
+Qwen qwen3.7-plus
++ PaddleOCR image text extraction
++ Independent text preprocessing
++ Risk Feature Extraction
++ Entity Extraction
++ BAAI/bge-m3 dense embeddings
++ FAISS vector search
++ BM25 lexical retrieval
++ URL/domain exact indicator matching
++ Evidence fusion
++ Evidence deduplication
++ BAAI/bge-reranker-v2-m3 reranking
+```
+
+BM25 indexes all knowledge items. FAISS indexes BGE-M3 dense embeddings for all items by default, or a configured subset when CPU build time needs to be controlled.
+
+Local model path:
+
+`D:\CARIC模型&数据集\models\BAAI_bge-m3`
+
+Local reranker path:
+
+`D:\CARIC模型&数据集\models\BAAI_bge-reranker-v2-m3`
+
+The final evidence score is configurable:
+
+```text
+final_score = alpha * bm25_score
+            + beta  * dense_score
+            + gamma * url_match_score
+            + delta * risk_keyword_score
+```
+
+The top fused candidates are then reranked with `BAAI/bge-reranker-v2-m3` when `USE_RERANKER=true`.
+Before final top-k output, retrieved evidence is explicitly deduplicated by item id and a normalized title/text fingerprint.
+
+Default weights:
+
+```text
+alpha = 0.35
+beta  = 0.35
+gamma = 0.15
+delta = 0.15
+reranker_weight = 0.30
+```
+
+## Structured Output
+
+The engine returns a JSON object with stable fields for later evaluation:
+
+- `preprocessing`
+- `entity_extraction`
+- `risk_features`
+- `risk_level`
+- `risk_score`
+- `fraud_type`
+- `risk_signals`
+- `evidence_summary`
+- `evidence_fusion`
+- `natural_language_report`
+- `anti_fraud_suggestion`
+- `compliance_rewrite`
+- `training_question`
+- `evaluation_labels`
+
+## Build The RAG Index
+
+```powershell
+python build_index.py
+```
+
+The generated index is stored in `storage/rag_index`.
+
+On a CPU-only machine, BGE-M3 embedding can take some time. Useful build options:
+
+```powershell
+D:\conda\envs\pytorch\python.exe build_index.py --dense-limit 500
+D:\conda\envs\pytorch\python.exe build_index.py --skip-dense
+```
+
+`--dense-limit 0` means dense FAISS embeddings for all knowledge items.
+
+For GPU acceleration, use the `pytorch` conda environment on this machine:
+
+```powershell
+D:\conda\envs\pytorch\python.exe build_index.py
+D:\conda\envs\pytorch\python.exe -m streamlit run app.py --server.port 8501
+```
+
+## Run A CLI Demo
+
+Mock mode, no API call:
+
+```powershell
+python run_demo.py --mock
+```
+
+Real Qwen API mode:
+
+```powershell
+python run_demo.py
+```
+
+## Run The Web App
+
+```powershell
+streamlit run app.py --server.port 8501
+```
+
+Open:
+
+`http://localhost:8501`
+
+The web app supports text input and image upload. Uploaded chat screenshots, SMS screenshots, posters, or phishing images are processed by OCR first; the recognized text is then merged with the typed text and sent through the same RAG risk-analysis pipeline. The main user-facing risk report is displayed as normal readable text, while full JSON remains available only in the raw-output/debug section.
+
+## Notes
+
+- The API key is intentionally not hardcoded.
+- URL/domain blacklists are used for exact indicator matching and are not fully embedded.
+- The RAG index uses hybrid retrieval: BM25 for lexical matching and BGE-M3 + FAISS for multilingual semantic matching.

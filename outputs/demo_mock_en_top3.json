@@ -1,0 +1,348 @@
+﻿{
+  "input_text": "Your university mailbox quota is full. Verify your student account now at http://secure-campus-login.example.com or your email access will be suspended. Enter your password and SMS code.",
+  "preprocessing": {
+    "raw_text": "Your university mailbox quota is full. Verify your student account now at http://secure-campus-login.example.com or your email access will be suspended. Enter your password and SMS code.",
+    "normalized_text": "Your university mailbox quota is full. Verify your student account now at http://secure-campus-login.example.com or your email access will be suspended. Enter your password and SMS code.",
+    "text_sources": [
+      "user_text"
+    ],
+    "removed_control_chars": 0,
+    "whitespace_collapsed": false
+  },
+  "detected_language": "en",
+  "entity_extraction": {
+    "urls": [
+      "http://secure-campus-login.example.com"
+    ],
+    "domains": [
+      "secure-campus-login.example.com"
+    ],
+    "email_addresses": [],
+    "phone_numbers": [],
+    "money_mentions": [],
+    "sender_identity_clues": [
+      "mailbox",
+      "account"
+    ],
+    "role_clues": [
+      "platform_or_bank"
+    ],
+    "organizations_or_services": [],
+    "evidence_subjects": [
+      "SMS/MMS case: Malicious SMS/MMS",
+      "sms_mms"
+    ]
+  },
+  "risk_features": {
+    "detected_language": "en",
+    "urls": [
+      "http://secure-campus-login.example.com"
+    ],
+    "domains": [
+      "secure-campus-login.example.com"
+    ],
+    "phone_numbers": [],
+    "money_mentions": [],
+    "matched_categories": [
+      "campus_context",
+      "credential_request",
+      "urgency_pressure"
+    ],
+    "matched_terms": [
+      "sms code",
+      "password",
+      "suspended",
+      "university",
+      "student",
+      "campus",
+      "mailbox"
+    ],
+    "category_hits": {
+      "credential_request": [
+        "sms code",
+        "password"
+      ],
+      "urgency_pressure": [
+        "suspended"
+      ],
+      "campus_context": [
+        "university",
+        "student",
+        "campus",
+        "mailbox"
+      ]
+    },
+    "risk_keyword_score": 0.48
+  },
+  "analysis": {
+    "schema_version": "1.1",
+    "detected_language": "en",
+    "risk_level": "Medium",
+    "risk_score": 0.4064,
+    "fraud_type": "Campus-themed social engineering + Credential phishing / account takeover",
+    "risk_features": {
+      "detected_language": "en",
+      "urls": [
+        "http://secure-campus-login.example.com"
+      ],
+      "domains": [
+        "secure-campus-login.example.com"
+      ],
+      "phone_numbers": [],
+      "money_mentions": [],
+      "matched_categories": [
+        "campus_context",
+        "credential_request",
+        "urgency_pressure"
+      ],
+      "matched_terms": [
+        "sms code",
+        "password",
+        "suspended",
+        "university",
+        "student",
+        "campus",
+        "mailbox"
+      ],
+      "category_hits": {
+        "credential_request": [
+          "sms code",
+          "password"
+        ],
+        "urgency_pressure": [
+          "suspended"
+        ],
+        "campus_context": [
+          "university",
+          "student",
+          "campus",
+          "mailbox"
+        ]
+      },
+      "risk_keyword_score": 0.48
+    },
+    "entity_extraction": {
+      "urls": [
+        "http://secure-campus-login.example.com"
+      ],
+      "domains": [
+        "secure-campus-login.example.com"
+      ],
+      "email_addresses": [],
+      "phone_numbers": [],
+      "money_mentions": [],
+      "sender_identity_clues": [
+        "mailbox",
+        "account"
+      ],
+      "role_clues": [
+        "platform_or_bank"
+      ],
+      "organizations_or_services": [],
+      "evidence_subjects": [
+        "SMS/MMS case: Malicious SMS/MMS",
+        "sms_mms"
+      ]
+    },
+    "risk_signals": [
+      "credential_request: sms code, password",
+      "urgency_pressure: suspended",
+      "campus_context: university, student, campus",
+      "URL detected: http://secure-campus-login.example.com"
+    ],
+    "event_subjects": [
+      "mailbox",
+      "account",
+      "http://secure-campus-login.example.com",
+      "secure-campus-login.example.com",
+      "SMS/MMS case: Malicious SMS/MMS",
+      "sms_mms"
+    ],
+    "reasoning": "Mock mode combines the independent risk-feature extractor, exact URL/domain indicator matches, and the top retrieved RAG evidence.",
+    "evidence_summary": [
+      {
+        "rank": 1,
+        "id": "sms-mms-01198",
+        "title": "SMS/MMS case: Malicious SMS/MMS",
+        "source": "sms_mms",
+        "final_score": 0.7021,
+        "fusion_score": 0.8076,
+        "reranker_score": 0.0069,
+        "bm25_score": 23.4053,
+        "dense_score": 0.6567,
+        "url_match_score": 0.0,
+        "risk_keyword_score": 0.496
+      },
+      {
+        "rank": 2,
+        "id": "sms-mms-00968",
+        "title": "SMS/MMS case: Malicious SMS/MMS",
+        "source": "sms_mms",
+        "final_score": 0.5975,
+        "fusion_score": 0.5975,
+        "reranker_score": 0.0,
+        "bm25_score": 12.1682,
+        "dense_score": 0.6336,
+        "url_match_score": 0.0,
+        "risk_keyword_score": 0.296
+      },
+      {
+        "rank": 3,
+        "id": "sms-mms-01036",
+        "title": "SMS/MMS case: Malicious SMS/MMS",
+        "source": "sms_mms",
+        "final_score": 0.5851,
+        "fusion_score": 0.5851,
+        "reranker_score": 0.0,
+        "bm25_score": 9.7605,
+        "dense_score": 0.6214,
+        "url_match_score": 0.0,
+        "risk_keyword_score": 0.496
+      }
+    ],
+    "evidence_fusion": {
+      "formula": "final_score = alpha*bm25_score + beta*dense_score + gamma*url_match_score + delta*risk_keyword_score, then optional BGE reranking",
+      "weights": {
+        "alpha_bm25": 0.35,
+        "beta_dense": 0.35,
+        "gamma_url_match": 0.15,
+        "delta_risk_keyword": 0.15,
+        "reranker_weight": 0.3
+      },
+      "top_evidence_scores": [
+        {
+          "rank": 1,
+          "id": "sms-mms-01198",
+          "title": "SMS/MMS case: Malicious SMS/MMS",
+          "source": "sms_mms",
+          "final_score": 0.7021,
+          "fusion_score": 0.8076,
+          "reranker_score": 0.0069,
+          "bm25_score": 23.4053,
+          "dense_score": 0.6567,
+          "url_match_score": 0.0,
+          "risk_keyword_score": 0.496
+        },
+        {
+          "rank": 2,
+          "id": "sms-mms-00968",
+          "title": "SMS/MMS case: Malicious SMS/MMS",
+          "source": "sms_mms",
+          "final_score": 0.5975,
+          "fusion_score": 0.5975,
+          "reranker_score": 0.0,
+          "bm25_score": 12.1682,
+          "dense_score": 0.6336,
+          "url_match_score": 0.0,
+          "risk_keyword_score": 0.296
+        },
+        {
+          "rank": 3,
+          "id": "sms-mms-01036",
+          "title": "SMS/MMS case: Malicious SMS/MMS",
+          "source": "sms_mms",
+          "final_score": 0.5851,
+          "fusion_score": 0.5851,
+          "reranker_score": 0.0,
+          "bm25_score": 9.7605,
+          "dense_score": 0.6214,
+          "url_match_score": 0.0,
+          "risk_keyword_score": 0.496
+        }
+      ]
+    },
+    "natural_language_report": "Risk level: Medium. Main pattern: Campus-themed social engineering + Credential phishing / account takeover. Key signals: credential_request: sms code, password; urgency_pressure: suspended; campus_context: university, student, campus. Verify through official channels before responding.",
+    "anti_fraud_suggestion": "Do not click unknown links, do not share passwords or verification codes, and verify requests through official university, bank, or platform channels.",
+    "compliance_rewrite": "Please verify this request through the official campus system or a trusted contact channel before providing any personal, account, or payment information.",
+    "training_question": {
+      "question": "Which signal is the strongest indicator of possible fraud?",
+      "reference_answer": "Requests for credentials, verification codes, payment, or urgent action through an unknown link."
+    },
+    "compliance_reminder": "This result is educational risk guidance and should not replace official police, bank, university, or legal verification.",
+    "evaluation_labels": {
+      "has_url": true,
+      "has_domain": true,
+      "has_exact_ioc_match": false,
+      "matched_feature_categories": [
+        "campus_context",
+        "credential_request",
+        "urgency_pressure"
+      ],
+      "entity_subject_count": 6,
+      "retrieved_evidence_count": 3
+    }
+  },
+  "retrieved_evidence": [
+    {
+      "rank": 1,
+      "score": 0.7020708918571472,
+      "fusion_score": 0.8075939416885376,
+      "reranker_score": 0.006902925204485655,
+      "bm25_score": 23.40534210205078,
+      "dense_score": 0.656730055809021,
+      "url_match_score": 0.0,
+      "risk_keyword_score": 0.4959999918937683,
+      "id": "sms-mms-01198",
+      "source": "sms_mms",
+      "title": "SMS/MMS case: Malicious SMS/MMS",
+      "text": "Message: Access to your account has been suspended. Kindly visit http://securecommsec.com.au/netbank for instructions, or reach out to us at XX XXXX. Dataset label: Malicious SMS/MMS",
+      "metadata": {
+        "label": "Malicious SMS/MMS",
+        "raw_label": "1",
+        "ai_generated": "1",
+        "has_url": "1",
+        "language": "en",
+        "category": "Malicious SMS/MMS",
+        "risk_level": "High"
+      }
+    },
+    {
+      "rank": 2,
+      "score": 0.5974682569503784,
+      "fusion_score": 0.5974682569503784,
+      "reranker_score": 0.0,
+      "bm25_score": 12.168185234069824,
+      "dense_score": 0.6336008310317993,
+      "url_match_score": 0.0,
+      "risk_keyword_score": 0.29600000381469727,
+      "id": "sms-mms-00968",
+      "source": "sms_mms",
+      "title": "SMS/MMS case: Malicious SMS/MMS",
+      "text": "Message: Dear user, We have detected unauthorized access to your account. Your account has been limited for security Dataset label: Malicious SMS/MMS",
+      "metadata": {
+        "label": "Malicious SMS/MMS",
+        "raw_label": "1",
+        "ai_generated": "0",
+        "has_url": "0",
+        "language": "en",
+        "category": "Malicious SMS/MMS",
+        "risk_level": "High"
+      }
+    },
+    {
+      "rank": 3,
+      "score": 0.5850936770439148,
+      "fusion_score": 0.5850936770439148,
+      "reranker_score": 0.0,
+      "bm25_score": 9.760519027709961,
+      "dense_score": 0.6214098930358887,
+      "url_match_score": 0.0,
+      "risk_keyword_score": 0.4959999918937683,
+      "id": "sms-mms-01036",
+      "source": "sms_mms",
+      "title": "SMS/MMS case: Malicious SMS/MMS",
+      "text": "Message: Notice: Your Westpac account has been suspended due to suspicious activity. Secure your account by logging into www.westpacalerts.com or visiting our nearest branch immediately. Dataset label: Malicious SMS/MMS",
+      "metadata": {
+        "label": "Malicious SMS/MMS",
+        "raw_label": "1",
+        "ai_generated": "1",
+        "has_url": "1",
+        "language": "en",
+        "category": "Malicious SMS/MMS",
+        "risk_level": "High"
+      }
+    }
+  ],
+  "exact_ioc_matches": [],
+  "raw_model_output": "mock"
+}
