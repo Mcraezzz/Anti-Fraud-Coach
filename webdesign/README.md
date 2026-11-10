@@ -1,20 +1,25 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# 校园反诈 RAG：配套网页设计原型
 
-# Run and deploy your AI Studio app
+[返回仓库总览](../README.md) · [Python RAG 项目](../docs/rag-project.md)
 
-This contains everything you need to run your app locally.
+本目录使用 React、TypeScript、Vite 和 Tailwind CSS，展示识别、证据、训练、历史和调试等页面。`src/App.tsx` 读取 `src/mockData.ts` 中的模拟结果；识别按钮与截图上传区域尚未接通真实分析流程。
 
-View your app in AI Studio: https://ai.studio/apps/b112433d-d4ed-49a1-be3e-a47f80da9267
+这是 RAG 项目的网页设计原型，与根目录 `pages/` 下的微信小程序分开，也与 `app.py` 提供的实际 Streamlit 界面分开。当前预览不需要 Gemini 或 Qwen API 密钥；依赖列表与 `.env.example` 中的 AI Studio 模板内容不代表已接入模型服务。
 
-## Run Locally
+## 本地预览
 
-**Prerequisites:**  Node.js
+在本目录执行（需要 Node.js 与 npm）：
 
+```powershell
+npm install
+npm run dev
+```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+开发服务器默认端口为 3000。构建和类型检查命令：
+
+```powershell
+npm run build
+npm run lint
+```
+
+如需运行 Python 检索与分析功能，请按 [RAG 项目说明](../docs/rag-project.md) 在仓库根目录启动 Streamlit。

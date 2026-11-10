@@ -1,183 +1,59 @@
-# Campus Anti-Fraud RAG System
+# Anti-Fraud Coach：两个项目说明与对比
 
-This project is a bilingual RAG prototype for the coursework topic:
+本仓库同时保存两个独立项目：**微信小程序产品原型**与**Python 校园反诈 RAG 系统**。两者围绕同一反诈主题，但当前没有接通，不能将小程序界面展示理解为已经调用 RAG 算法。
 
-**An LLM-RAG Based Anti-Fraud Media Content Recognition and Training System for College Students**
+## 项目一：微信小程序产品原型
 
-The system accepts Chinese, English, mixed fraud-related media text, or uploaded screenshots/images and returns:
+面向大学生的移动端反诈教练，重点展示识别、风险解释、问答、情景训练、能力报告与管理页面的产品流程。
 
-- fraud risk level
-- fraud type
-- independent risk feature extraction
-- OCR text extracted from uploaded images
-- key risk signals
-- retrieved evidence
-- evidence fusion and reranking scores
-- anti-fraud advice
-- training question
-- compliance reminder
-- structured JSON for evaluation
+- **技术**：微信小程序 JavaScript / WXML / WXSS，Skyline、glass-easel。
+- **入口与目录**：`app.js`、`app.json`、`app.wxss`、`pages/`、`components/`、`assets/`、`styles/`、`utils/`、`project.config.json`。
+- **当前状态**：界面与导航原型；识别为模拟跳转，结果与训练内容为预置数据，未连接真实 OCR、RAG 或模型接口。
+- **预览方式**：用微信开发者工具导入仓库根目录；按需配置 AppID，使用支持 Skyline 的环境。
 
-## Data Sources
+详细说明：[微信小程序项目](docs/mini-program.md)。
 
-Default dataset root:
+## 项目二：校园反诈 RAG 识别与训练系统
 
-`D:\CARIC模型&数据集\datasets`
+面向课程研究与技术验证，处理中文、英文或混合文本，以及经 OCR 提取的图片文字，输出风险分析、检索证据、处置建议和训练问题。
 
-Main sources used by the index builder:
+- **技术**：Python、Streamlit、Qwen、PaddleOCR、BGE-M3、FAISS、BM25 和 BGE reranker。
+- **入口与目录**：`app.py`、`build_index.py`、`run_demo.py`、`anti_fraud_rag/`、`tests/`、`requirements.txt`。
+- **当前状态**：具有实际检索与模型调用代码；运行需要相应依赖、数据和模型配置。缺少密钥或调用失败时会回退为规则模拟分析。
+- **配套网页**：`webdesign/` 是 React / TypeScript / Vite 设计原型，当前使用模拟数据，尚未连接 Python 引擎；实际 Python 网页入口是 Streamlit `app.py`。
+- **研究材料**：`N&D Report.docx`、`PROJECT_ANALYSIS_REPORT.md`、`参考文献/`、`outputs/` 等。
 
-- `campus_anti_fraud_bilingual_rules`
-- `ChiFraud`
-- `hf_notd5a_malicious-benign-sms-mms-dataset`
-- `hf_wangyuancheng_discord-phishing-scam-clean`
-- `hf_weijianzhg_email-safety-triage-10k`
-- `github_Phishing-Database_Phishing.Database`
-- `hf_phishdestroy_destroylist`
-- `github_scamsniffer_scam-database`
+详细说明及安装、建索引、启动命令：[RAG 项目](docs/rag-project.md)。网页原型运行方法：[webdesign 说明](webdesign/README.md)。
 
-## Setup
+## 两个项目的共同点
 
-Install dependencies:
+- 面向大学生的反诈识别与安全教育，关注短信、聊天、链接等可疑内容。
+- 都体现“识别风险 → 解释风险 → 给出处置建议 → 训练学习”的设计方向。
+- 都重视风险信号和用户可读的解释，能够作为同一反诈产品的不同部分继续开发。
 
-```powershell
-python -m pip install -r requirements.txt
-```
+以上是目标与设计层面的共同点，不表示两者已共享同一算法、数据或服务。
 
-Set the Qwen API key as an environment variable:
+## 两个项目的差异
 
-```powershell
-$env:DASHSCOPE_API_KEY="sk-your-api-key-here"
-```
+| 对比项 | 微信小程序项目 | Python RAG 项目 |
+| --- | --- | --- |
+| 核心定位 | 移动端产品体验与交互展示 | 反诈检索、分析与技术验证 |
+| 主要运行环境 | 微信开发者工具 / 小程序环境 | Python 命令行 / Streamlit 浏览器界面 |
+| 主要语言 | JavaScript、WXML、WXSS | Python；配套网页原型使用 TypeScript / React |
+| 识别过程 | 预置界面与定时跳转 | 预处理、风险特征、实体提取、混合检索、生成分析 |
+| OCR | 提供界面入口，尚未接入实际识别 | Streamlit 流程具有 PaddleOCR 接入代码，需准备依赖与模型 |
+| 证据与结果来源 | 页面内预置内容 | 本地知识库、规则与可选 Qwen 调用；存在模拟回退 |
+| 问答和训练 | 问答入口、场景和能力报告的界面展示 | 分析结果可包含训练问题；不等于完整的在线教学平台 |
+| 数据与依赖 | 界面预览无需 Python 模型或索引 | 完整能力依赖本地数据、模型、索引及可选 API 密钥 |
+| 验证重点 | 页面布局、导航与交互流程 | 检索证据、分析输出、OCR 与模型调用行为 |
+| 当前集成状态 | 未调用 Python RAG 引擎 | 未向小程序提供已接通的业务接口；React 原型也未接通 |
 
-Optional settings:
+## 仓库结构与运行边界
 
-```powershell
-$env:DASHSCOPE_BASE_URL="https://dashscope.aliyuncs.com/compatible-mode/v1"
-$env:QWEN_MODEL="qwen3.7-plus"
-```
+两个项目目前共用仓库根目录，但启动方式独立：`app.js` 属于小程序，`app.py` 属于 Python 应用。`webdesign/` 是 RAG 项目的配套界面原型，不是小程序代码，也不是已上线的第三个后端服务。
 
-## Retrieval Architecture
+上传内容包括源码、配置示例、报告和图表。密钥文件、依赖目录、运行日志、`storage/` 本地索引以及 `downloads/` 第三方安装包不纳入版本控制；外部数据集和模型权重也不随本仓库提供。
 
-The current system uses:
+## 后续集成方向（尚未实现）
 
-```text
-Qwen qwen3.7-plus
-+ PaddleOCR image text extraction
-+ Independent text preprocessing
-+ Risk Feature Extraction
-+ Entity Extraction
-+ BAAI/bge-m3 dense embeddings
-+ FAISS vector search
-+ BM25 lexical retrieval
-+ URL/domain exact indicator matching
-+ Evidence fusion
-+ Evidence deduplication
-+ BAAI/bge-reranker-v2-m3 reranking
-```
-
-BM25 indexes all knowledge items. FAISS indexes BGE-M3 dense embeddings for all items by default, or a configured subset when CPU build time needs to be controlled.
-
-Local model path:
-
-`D:\CARIC模型&数据集\models\BAAI_bge-m3`
-
-Local reranker path:
-
-`D:\CARIC模型&数据集\models\BAAI_bge-reranker-v2-m3`
-
-The final evidence score is configurable:
-
-```text
-final_score = alpha * bm25_score
-            + beta  * dense_score
-            + gamma * url_match_score
-            + delta * risk_keyword_score
-```
-
-The top fused candidates are then reranked with `BAAI/bge-reranker-v2-m3` when `USE_RERANKER=true`.
-Before final top-k output, retrieved evidence is explicitly deduplicated by item id and a normalized title/text fingerprint.
-
-Default weights:
-
-```text
-alpha = 0.35
-beta  = 0.35
-gamma = 0.15
-delta = 0.15
-reranker_weight = 0.30
-```
-
-## Structured Output
-
-The engine returns a JSON object with stable fields for later evaluation:
-
-- `preprocessing`
-- `entity_extraction`
-- `risk_features`
-- `risk_level`
-- `risk_score`
-- `fraud_type`
-- `risk_signals`
-- `evidence_summary`
-- `evidence_fusion`
-- `natural_language_report`
-- `anti_fraud_suggestion`
-- `compliance_rewrite`
-- `training_question`
-- `evaluation_labels`
-
-## Build The RAG Index
-
-```powershell
-python build_index.py
-```
-
-The generated index is stored in `storage/rag_index`.
-
-On a CPU-only machine, BGE-M3 embedding can take some time. Useful build options:
-
-```powershell
-D:\conda\envs\pytorch\python.exe build_index.py --dense-limit 500
-D:\conda\envs\pytorch\python.exe build_index.py --skip-dense
-```
-
-`--dense-limit 0` means dense FAISS embeddings for all knowledge items.
-
-For GPU acceleration, use the `pytorch` conda environment on this machine:
-
-```powershell
-D:\conda\envs\pytorch\python.exe build_index.py
-D:\conda\envs\pytorch\python.exe -m streamlit run app.py --server.port 8501
-```
-
-## Run A CLI Demo
-
-Mock mode, no API call:
-
-```powershell
-python run_demo.py --mock
-```
-
-Real Qwen API mode:
-
-```powershell
-python run_demo.py
-```
-
-## Run The Web App
-
-```powershell
-streamlit run app.py --server.port 8501
-```
-
-Open:
-
-`http://localhost:8501`
-
-The web app supports text input and image upload. Uploaded chat screenshots, SMS screenshots, posters, or phishing images are processed by OCR first; the recognized text is then merged with the typed text and sent through the same RAG risk-analysis pipeline. The main user-facing risk report is displayed as normal readable text, while full JSON remains available only in the raw-output/debug section.
-
-## Notes
-
-- The API key is intentionally not hardcoded.
-- URL/domain blacklists are used for exact indicator matching and are not fully embedded.
-- The RAG index uses hybrid retrieval: BM25 for lexical matching and BGE-M3 + FAISS for multilingual semantic matching.
+可以将 Python 引擎封装为服务接口，再由小程序或 React 网页提交文本/图片并展示分析结果。实现时需要补充接口协议、上传与 OCR 流程、错误处理、访问控制及数据持久化。当前两套项目仍应分别运行、演示和评价。
