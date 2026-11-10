@@ -1,5 +1,7 @@
 # 校园反诈 RAG：配套网页设计原型
 
+[中文](README.md) | [English](README.en.md)
+
 [返回仓库总览](../README.md) · [Python RAG 项目](../docs/rag-project.md)
 
 本目录使用 React、TypeScript、Vite 和 Tailwind CSS，展示识别、证据、训练、历史和调试等页面。`src/App.tsx` 读取 `src/mockData.ts` 中的模拟结果；识别按钮与截图上传区域尚未接通真实分析流程。

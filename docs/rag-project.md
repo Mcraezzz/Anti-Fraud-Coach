@@ -1,5 +1,7 @@
 # 项目二：校园反诈 RAG 识别与训练系统
 
+[中文](rag-project.md) | [English](rag-project.en.md)
+
 [返回仓库总览](../README.md)
 
 ## 定位与实现范围
@@ -16,35 +18,13 @@
 
 目前代码实现不等同于经过真实场景准确率验证或已经上线的服务。前端展示、检索证据与模型输出应分别评估。
 
-## 原有技术与运行说明
+## 技术与运行说明
 
-# Campus Anti-Fraud RAG System
+课程主题：**基于 LLM-RAG 的大学生反诈媒体内容识别与训练系统**。系统接受中文、英文、混合文本或截图/图片，提供风险等级、诈骗类型、独立风险特征、OCR 文字、关键信号、检索证据、融合与重排序得分、反诈建议、训练问题、合规提醒和用于评估的结构化 JSON。
 
-This project is a bilingual RAG prototype for the coursework topic:
+### 数据来源
 
-**An LLM-RAG Based Anti-Fraud Media Content Recognition and Training System for College Students**
-
-The system accepts Chinese, English, mixed fraud-related media text, or uploaded screenshots/images and returns:
-
-- fraud risk level
-- fraud type
-- independent risk feature extraction
-- OCR text extracted from uploaded images
-- key risk signals
-- retrieved evidence
-- evidence fusion and reranking scores
-- anti-fraud advice
-- training question
-- compliance reminder
-- structured JSON for evaluation
-
-## Data Sources
-
-Default dataset root:
-
-`D:\CARIC模型&数据集\datasets`
-
-Main sources used by the index builder:
+默认数据集根目录为 `D:\CARIC模型&数据集\datasets`。索引构建器使用的主要来源包括：
 
 - `campus_anti_fraud_bilingual_rules`
 - `ChiFraud`
@@ -55,57 +35,37 @@ Main sources used by the index builder:
 - `hf_phishdestroy_destroylist`
 - `github_scamsniffer_scam-database`
 
-## Setup
+### 安装与配置
 
-Install dependencies:
+安装依赖：
 
 ```powershell
 python -m pip install -r requirements.txt
 ```
 
-Set the Qwen API key as an environment variable:
+通过环境变量设置 Qwen API 密钥：
 
 ```powershell
 $env:DASHSCOPE_API_KEY="sk-your-api-key-here"
 ```
 
-Optional settings:
+可选配置：
 
 ```powershell
 $env:DASHSCOPE_BASE_URL="https://dashscope.aliyuncs.com/compatible-mode/v1"
 $env:QWEN_MODEL="qwen3.7-plus"
 ```
 
-## Retrieval Architecture
+### 检索架构
 
-The current system uses:
+当前实现结合 Qwen `qwen3.7-plus`、PaddleOCR 图片文字提取、独立文本预处理、风险特征与实体提取、BGE-M3 稠密向量、FAISS 向量检索、BM25 词法检索、URL/域名精确指标匹配、证据融合、去重和 BGE reranker 重排序。
 
-```text
-Qwen qwen3.7-plus
-+ PaddleOCR image text extraction
-+ Independent text preprocessing
-+ Risk Feature Extraction
-+ Entity Extraction
-+ BAAI/bge-m3 dense embeddings
-+ FAISS vector search
-+ BM25 lexical retrieval
-+ URL/domain exact indicator matching
-+ Evidence fusion
-+ Evidence deduplication
-+ BAAI/bge-reranker-v2-m3 reranking
-```
+BM25 索引全部知识条目；FAISS 默认索引全部条目的 BGE-M3 向量，也可限制数量以控制 CPU 构建时间。原开发环境中的模型路径为：
 
-BM25 indexes all knowledge items. FAISS indexes BGE-M3 dense embeddings for all items by default, or a configured subset when CPU build time needs to be controlled.
+- `D:\CARIC模型&数据集\models\BAAI_bge-m3`
+- `D:\CARIC模型&数据集\models\BAAI_bge-reranker-v2-m3`
 
-Local model path:
-
-`D:\CARIC模型&数据集\models\BAAI_bge-m3`
-
-Local reranker path:
-
-`D:\CARIC模型&数据集\models\BAAI_bge-reranker-v2-m3`
-
-The final evidence score is configurable:
+证据融合得分可配置：
 
 ```text
 final_score = alpha * bm25_score
@@ -114,22 +74,21 @@ final_score = alpha * bm25_score
             + delta * risk_keyword_score
 ```
 
-The top fused candidates are then reranked with `BAAI/bge-reranker-v2-m3` when `USE_RERANKER=true`.
-Before final top-k output, retrieved evidence is explicitly deduplicated by item id and a normalized title/text fingerprint.
+当 `USE_RERANKER=true` 时，融合后的候选证据会使用 `BAAI/bge-reranker-v2-m3` 重排序。输出最终 top-k 前，依据条目 ID 和归一化标题/文本指纹去重。
 
-Default weights:
+默认权重：
 
 ```text
 alpha = 0.35
-beta  = 0.35
+beta = 0.35
 gamma = 0.15
 delta = 0.15
 reranker_weight = 0.30
 ```
 
-## Structured Output
+### 结构化输出
 
-The engine returns a JSON object with stable fields for later evaluation:
+返回 JSON 包含预处理、实体和风险特征等信息，分析结果包含风险、解释与建议。用于后续评估的相关字段包括：
 
 - `preprocessing`
 - `entity_extraction`
@@ -146,58 +105,52 @@ The engine returns a JSON object with stable fields for later evaluation:
 - `training_question`
 - `evaluation_labels`
 
-## Build The RAG Index
+这些字段可能位于返回对象的不同层级；请以引擎返回结构为准。
+
+### 构建 RAG 索引
 
 ```powershell
 python build_index.py
 ```
 
-The generated index is stored in `storage/rag_index`.
-
-On a CPU-only machine, BGE-M3 embedding can take some time. Useful build options:
+生成的索引保存在 `storage/rag_index`。仅使用 CPU 时，BGE-M3 编码可能耗时较长，可限制稠密索引数量或跳过稠密索引：
 
 ```powershell
-D:\conda\envs\pytorch\python.exe build_index.py --dense-limit 500
-D:\conda\envs\pytorch\python.exe build_index.py --skip-dense
+python build_index.py --dense-limit 500
+python build_index.py --skip-dense
 ```
 
-`--dense-limit 0` means dense FAISS embeddings for all knowledge items.
-
-For GPU acceleration, use the `pytorch` conda environment on this machine:
+`--dense-limit 0` 表示对全部知识条目构建稠密 FAISS 索引。原开发机的 GPU 环境示例（其他机器请替换为实际 Python 路径）：
 
 ```powershell
 D:\conda\envs\pytorch\python.exe build_index.py
 D:\conda\envs\pytorch\python.exe -m streamlit run app.py --server.port 8501
 ```
 
-## Run A CLI Demo
+### 命令行演示
 
-Mock mode, no API call:
+模拟模式，不调用 Qwen API：
 
 ```powershell
 python run_demo.py --mock
 ```
 
-Real Qwen API mode:
+调用真实 Qwen API（需有效配置）：
 
 ```powershell
 python run_demo.py
 ```
 
-## Run The Web App
+### 启动网页应用
 
 ```powershell
 streamlit run app.py --server.port 8501
 ```
 
-Open:
+浏览器打开 `http://localhost:8501`。界面支持文本输入和图片上传；聊天/短信截图、海报或钓鱼图片先经过 OCR，提取文字与输入文本合并后进入同一 RAG 分析流程。主报告以可读文本展示，完整 JSON 在原始输出/调试区域查看。
 
-`http://localhost:8501`
+### 补充说明
 
-The web app supports text input and image upload. Uploaded chat screenshots, SMS screenshots, posters, or phishing images are processed by OCR first; the recognized text is then merged with the typed text and sent through the same RAG risk-analysis pipeline. The main user-facing risk report is displayed as normal readable text, while full JSON remains available only in the raw-output/debug section.
-
-## Notes
-
-- The API key is intentionally not hardcoded.
-- URL/domain blacklists are used for exact indicator matching and are not fully embedded.
-- The RAG index uses hybrid retrieval: BM25 for lexical matching and BGE-M3 + FAISS for multilingual semantic matching.
+- API 密钥不硬编码。
+- URL/域名黑名单用于精确指标匹配，不会全部向量化。
+- 混合检索由 BM25 词法匹配与 BGE-M3 + FAISS 多语言语义匹配组成。

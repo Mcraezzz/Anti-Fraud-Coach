@@ -1,5 +1,7 @@
 # 项目一：Anti-Fraud Coach 微信小程序
 
+[中文](mini-program.md) | [English](mini-program.en.md)
+
 [返回仓库总览](../README.md)
 
 ## 项目定位
