@@ -5,7 +5,6 @@ import math
 import re
 from collections import Counter
 from pathlib import Path
-from urllib.parse import urlparse
 
 import faiss
 import jieba
@@ -18,7 +17,7 @@ from .config import AppConfig
 from .reranker import BgeReranker
 from .risk_features import RiskFeatures
 from .schemas import IocStore, KnowledgeItem
-from .utils import compact, extract_domains, extract_urls, normalize_text
+from .utils import compact, extract_domains, extract_urls, normalize_network_indicator, normalize_text
 
 
 class BM25Index:
@@ -494,20 +493,8 @@ def category_alignment_score(document: str, categories: set[str]) -> float:
 
 
 def normalize_domain_indicator(value: str) -> str:
-    value = value.strip().lower()
-    if "://" not in value:
-        value = "http://" + value
-    parsed = urlparse(value)
-    host = parsed.netloc or parsed.path.split("/")[0]
-    return host.lstrip("www.").strip()
+    return normalize_network_indicator(value)
 
 
 def normalize_url_indicator(value: str) -> str:
-    value = value.strip().lower()
-    if "://" not in value:
-        value = "http://" + value
-    parsed = urlparse(value)
-    host = (parsed.netloc or "").lstrip("www.")
-    path = parsed.path.rstrip("/")
-    query = f"?{parsed.query}" if parsed.query else ""
-    return f"{host}{path}{query}" if host else ""
+    return normalize_network_indicator(value, include_path=True)

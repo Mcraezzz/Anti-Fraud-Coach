@@ -13,11 +13,12 @@ from anti_fraud_rag.data_loader import (
 from anti_fraud_rag.entity_extraction import extract_entities
 from anti_fraud_rag.ocr import parse_ocr_lines
 from anti_fraud_rag.preprocessing import build_analysis_input, preprocess_media_text
-from anti_fraud_rag.rag_engine import parse_json_response
+from anti_fraud_rag.rag_engine import coerce_float, parse_json_response
 from anti_fraud_rag.reranker import normalize_reranker_scores
 from anti_fraud_rag.risk_features import extract_risk_features
 from anti_fraud_rag.retriever import deduplicate_evidence_results, normalize_domain_indicator, normalize_url_indicator
-from anti_fraud_rag.retriever import BM25Index, tokenize_for_bm25
+from anti_fraud_rag.retriever import BM25Index, LocalRagIndex, tokenize_for_bm25
+from anti_fraud_rag.schemas import IocStore
 from anti_fraud_rag.utils import detect_language, extract_domains, extract_urls
 
 
@@ -50,6 +51,59 @@ class CoreBehaviorTests(unittest.TestCase):
             "example.com/login?a=1",
         )
         self.assertEqual(normalize_domain_indicator("https://www.example.com/login"), "example.com")
+
+    def test_ioc_hosts_do_not_lose_leading_w_characters(self):
+        for host in ("wallet.example.com", "www2.example.com", "ww.example.com"):
+            for normalize in (normalize_domain_ioc, normalize_domain_indicator):
+                self.assertEqual(normalize(host), host)
+            self.assertIn(host, extract_domains("https://" + host + "/Login"))
+        self.assertEqual(normalize_domain_ioc("https://user@www.Example.com:8443/Login"), "example.com")
+
+    def test_ioc_loader_and_query_preserve_url_case(self):
+        value = "https://www.Example.com:8443/Login?Token=AbC"
+        expected = "example.com:8443/Login?Token=AbC"
+        self.assertEqual(normalize_url_ioc(value), expected)
+        self.assertEqual(normalize_url_indicator(value), expected)
+        self.assertNotEqual(normalize_url_indicator(value.lower()), expected)
+        for normalize in (normalize_url_ioc, normalize_url_indicator):
+            self.assertEqual(normalize(""), "")
+            self.assertEqual(normalize("https://[invalid"), "")
+
+    def test_exact_ioc_match_uses_same_normalization_as_ingestion(self):
+        index = LocalRagIndex.__new__(LocalRagIndex)
+        url = "https://wallet.example.com/Login?Token=AbC"
+        index.iocs = IocStore(domains={normalize_domain_ioc(url)}, urls={normalize_url_ioc(url)})
+        matches = index.exact_ioc_matches(url)
+        self.assertEqual({item["type"] for item in matches}, {"url", "domain"})
+        self.assertEqual([item["type"] for item in index.exact_ioc_matches(url.lower())], ["domain"])
+        self.assertEqual(index.exact_ioc_matches("https://allet.example.com/Login?Token=AbC"), [])
+
+    def test_ocr_parser_reads_result_objects_and_generators(self):
+        class MethodResult:
+            def json(self):
+                return {"rec_texts": ["method"], "rec_scores": [0.8]}
+
+        class PropertyResult:
+            json = {"res": {"rec_texts": ["property"], "rec_scores": [0.9]}}
+
+        class StringResult:
+            json = '{"rec_texts": ["string"]}'
+
+        lines = parse_ocr_lines(iter([MethodResult(), PropertyResult(), StringResult()]))
+        self.assertEqual([line.text for line in lines], ["method", "property", "string"])
+        self.assertEqual([line.confidence for line in lines], [0.8, 0.9, None])
+
+    def test_ocr_numpy_scores_and_zero_confidence(self):
+        lines = parse_ocr_lines({"rec_texts": np.array(["first", "second"]),
+                                 "rec_scores": np.array([0.0, 0.9])})
+        self.assertEqual([line.confidence for line in lines], [0.0, 0.9])
+        self.assertEqual(parse_ocr_lines({"text": "zero", "score": 0, "confidence": 0.9})[0].confidence, 0)
+        self.assertIsNone(parse_ocr_lines({"text": "invalid", "score": float("nan")})[0].confidence)
+
+    def test_nonfinite_model_scores_use_fallback(self):
+        for value in ("NaN", float("inf"), float("-inf"), None, "invalid"):
+            self.assertEqual(coerce_float(value, 0.35), 0.35)
+        self.assertEqual(coerce_float("0.8", 0.35), 0.8)
 
     def test_url_and_domain_extraction(self):
         text = "Go to https://secure-login.example.com/path or secure-login.example.com"

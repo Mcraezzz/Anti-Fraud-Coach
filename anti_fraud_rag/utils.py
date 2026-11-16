@@ -47,15 +47,32 @@ def extract_urls(text: str) -> list[str]:
     return [m.group(0).rstrip(".,;:!?") for m in URL_RE.finditer(text or "")]
 
 
+def normalize_network_indicator(value: str, *, include_path: bool = False) -> str:
+    """Normalize hosts consistently without changing case-sensitive URL paths."""
+    value = normalize_text(value).strip(",")
+    if not value or value.lower() in {"domain", "url"}:
+        return ""
+    try:
+        parsed = urlparse(value if "://" in value else "http://" + value)
+        host = (parsed.hostname or "").lower().removeprefix("www.").rstrip(".")
+        if not host:
+            return ""
+        if not include_path:
+            return host
+        # Credentials are not part of the network destination; ports are.
+        authority = f"[{host}]" if ":" in host else host
+        if parsed.port is not None:
+            authority += f":{parsed.port}"
+        query = f"?{parsed.query}" if parsed.query else ""
+        return f"{authority}{parsed.path.rstrip('/')}{query}"
+    except ValueError:
+        return ""
+
+
 def extract_domains(text: str) -> list[str]:
-    domains: set[str] = set()
-    for url in extract_urls(text):
-        parsed = urlparse(url)
-        if parsed.netloc:
-            domains.add(parsed.netloc.lower().lstrip("www."))
-    for match in DOMAIN_RE.finditer(text or ""):
-        domains.add(match.group(0).lower().lstrip("www."))
-    return sorted(domains)
+    candidates = extract_urls(text)
+    candidates.extend(match.group(0) for match in DOMAIN_RE.finditer(text or ""))
+    return sorted({host for value in candidates if (host := normalize_network_indicator(value))})
 
 
 def compact(text: str, limit: int = 900) -> str:

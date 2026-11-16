@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import math
 import re
 from typing import Any
 
@@ -483,7 +484,8 @@ def ensure_list(value: Any) -> list:
 
 def coerce_float(value: Any, fallback: float) -> float:
     try:
-        return float(value)
+        result = float(value)
+        return result if math.isfinite(result) else fallback
     except (TypeError, ValueError):
         return fallback
 

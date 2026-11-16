@@ -19,8 +19,24 @@ Page({
     ]
   },
 
-  onLoad(options) {
-    this.setData({ activeType: options.type || 'text' })
+  onLoad(options = {}) {
+    const activeType = this.data.tabs.some(tab => tab.key === options.type) ? options.type : 'text'
+    this.setData({ activeType })
+  },
+
+  cancelScan() {
+    if (this._scanTimer != null) clearTimeout(this._scanTimer)
+    this._scanTimer = null
+    this.setData({ scanning: false })
+  },
+
+  onHide() {
+    this.cancelScan()
+  },
+
+  onUnload() {
+    if (this._scanTimer != null) clearTimeout(this._scanTimer)
+    this._scanTimer = null
   },
 
   onTabChange(event) {
@@ -28,10 +44,12 @@ Page({
   },
 
   switchType(event) {
+    this.cancelScan()
     this.setData({ activeType: event.currentTarget.dataset.type })
   },
 
   startScan() {
+    if (this.data.scanning) return
     this.setData({
       scanning: true,
       steps: [
@@ -40,9 +58,13 @@ Page({
         { label: '生成处置建议', done: false }
       ]
     })
-    setTimeout(() => {
-      wx.navigateTo({ url: '/pages/result/index', routeType: 'afc-card' })
-      this.setData({ scanning: false })
+    this._scanTimer = setTimeout(() => {
+      this._scanTimer = null
+      wx.navigateTo({
+        url: '/pages/result/index',
+        routeType: 'afc-card',
+        complete: () => this.setData({ scanning: false })
+      })
     }, 700)
   }
 })

@@ -36,3 +36,9 @@ Previewing the current UI requires neither the Python project nor a Qwen API key
 ## Relationship to the RAG Project
 
 Both projects share the campus anti-fraud theme and the recognition–explanation–training design approach, but they currently share no runtime, request API, or user data. The RAG engine could serve as the basis of a future backend integration; this is a development direction, not an existing capability.
+
+## Maintenance and Regression Checks
+
+The recognition flow prevents repeated taps and clears pending navigation when the page is hidden, unloaded, or its input mode changes. Invalid launch modes fall back to text. Recognition remains a prototype demonstration; these changes do not connect it to RAG.
+
+From the repository root, run `node --test tests/mini_program.test.cjs` with Node.js 18 or later. Tests use mocked WeChat APIs and timers to check interaction logic; they do not replace device or rendering checks in WeChat DevTools.

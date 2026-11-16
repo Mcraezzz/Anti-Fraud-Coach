@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 import os
+import json
+import math
+from collections.abc import Iterator
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
@@ -138,6 +141,8 @@ def parse_ocr_lines(raw: Any) -> list[OcrLine]:
     seen: set[tuple[str, float | None]] = set()
 
     def add_line(text: Any, confidence: Any = None) -> None:
+        if text is None:
+            return
         normalized = str(text).strip()
         if not normalized:
             return
@@ -152,11 +157,20 @@ def parse_ocr_lines(raw: Any) -> list[OcrLine]:
         if obj is None:
             return
 
-        if hasattr(obj, "json") and callable(obj.json):
+        if isinstance(obj, Iterator):
+            for result in obj:
+                walk(result)
+            return
+
+        if hasattr(obj, "json"):
             try:
-                walk(obj.json)
-                return
-            except Exception:
+                payload = obj.json() if callable(obj.json) else obj.json
+                if isinstance(payload, str):
+                    payload = json.loads(payload)
+                if payload is not obj and isinstance(payload, (dict, list, tuple)):
+                    walk(payload)
+                    return
+            except (TypeError, ValueError):
                 pass
 
         if hasattr(obj, "to_dict") and callable(obj.to_dict):
@@ -167,16 +181,24 @@ def parse_ocr_lines(raw: Any) -> list[OcrLine]:
                 pass
 
         if isinstance(obj, dict):
-            rec_texts = obj.get("rec_texts") or obj.get("texts")
-            if isinstance(rec_texts, list):
-                rec_scores = obj.get("rec_scores") or obj.get("scores") or []
+            rec_texts = obj.get("rec_texts")
+            if rec_texts is None:
+                rec_texts = obj.get("texts")
+            if hasattr(rec_texts, "tolist"):
+                rec_texts = rec_texts.tolist()
+            if isinstance(rec_texts, (list, tuple)):
+                rec_scores = obj.get("rec_scores")
+                if rec_scores is None:
+                    rec_scores = obj.get("scores")
+                if rec_scores is None:
+                    rec_scores = []
                 for idx, text in enumerate(rec_texts):
                     score = rec_scores[idx] if idx < len(rec_scores) else None
                     add_line(text, score)
                 return
             for text_key in ("text", "transcription", "label"):
                 if text_key in obj and isinstance(obj[text_key], str):
-                    add_line(obj[text_key], obj.get("score") or obj.get("confidence"))
+                    add_line(obj[text_key], obj.get("score") if obj.get("score") is not None else obj.get("confidence"))
                     return
             for value in obj.values():
                 walk(value)
@@ -209,6 +231,7 @@ def looks_like_v2_line(obj: Any) -> bool:
 
 def coerce_confidence(value: Any) -> float | None:
     try:
-        return round(float(value), 4)
+        score = float(value)
+        return round(score, 4) if math.isfinite(score) else None
     except (TypeError, ValueError):
         return None

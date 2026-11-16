@@ -2,13 +2,12 @@ from __future__ import annotations
 
 import csv
 import json
-from urllib.parse import urlparse
 from collections import Counter, defaultdict
 from pathlib import Path
 
 from .config import AppConfig
 from .schemas import IocStore, KnowledgeItem
-from .utils import compact, normalize_text, read_jsonl
+from .utils import compact, normalize_network_indicator, normalize_text, read_jsonl
 
 
 CHIFRAUD_LABELS = {
@@ -305,26 +304,8 @@ def label_display_name(label: str, mapping: dict[str, str]) -> str:
 
 
 def normalize_domain_ioc(value: str) -> str:
-    value = normalize_text(value).strip().strip(",")
-    if not value or value.lower() in {"domain", "url"}:
-        return ""
-    if "://" not in value:
-        value = "http://" + value
-    parsed = urlparse(value)
-    host = parsed.netloc or parsed.path.split("/")[0]
-    return host.lower().lstrip("www.").strip()
+    return normalize_network_indicator(value)
 
 
 def normalize_url_ioc(value: str) -> str:
-    value = normalize_text(value).strip().strip(",")
-    if not value or value.lower() in {"domain", "url"}:
-        return ""
-    if "://" not in value:
-        value = "http://" + value
-    parsed = urlparse(value)
-    host = (parsed.netloc or "").lower().lstrip("www.")
-    if not host:
-        return ""
-    path = parsed.path.rstrip("/")
-    query = f"?{parsed.query}" if parsed.query else ""
-    return f"{host}{path}{query}"
+    return normalize_network_indicator(value, include_path=True)

@@ -201,3 +201,11 @@ The web app supports text input and image upload. Uploaded chat screenshots, SMS
 - The API key is intentionally not hardcoded.
 - URL/domain blacklists are used for exact indicator matching and are not fully embedded.
 - The RAG index uses hybrid retrieval: BM25 for lexical matching and BGE-M3 + FAISS for multilingual semantic matching.
+
+## Maintenance and Regression Checks
+
+Indicator ingestion and lookup share normalization rules: only the complete `www.` prefix is removed, and URL path/query case is preserved. OCR parsing supports result objects, generators, and NumPy arrays while preserving zero confidence. Non-finite risk scores fall back to the heuristic score.
+
+**Upgrade note:** If an index was built with an older version, rebuild it from the original data using `python build_index.py` to replace IOC files containing incorrectly truncated hostnames. Keep your dataset paths and dense-index options. Do not attempt to repair old indexes with string replacement alone.
+
+Run `python -m unittest discover -s tests -v` from the repository root in a Python environment with the project dependencies installed. These regression checks do not call online models or validate real-world model accuracy.
