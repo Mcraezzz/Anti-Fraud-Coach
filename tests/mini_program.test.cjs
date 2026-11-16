@@ -10,7 +10,7 @@ function createPage() {
   const timers = new Map()
   const navigations = []
   const sandbox = {
-    require: () => ({ tabbarList: [], goTab() {} }),
+    require: name => name.endsWith('/risk') ? require('../utils/risk') : ({ tabbarList: [], goTab() {} }),
     Page: value => { definition = value },
     setTimeout: fn => { timers.set(++nextId, fn); return nextId },
     clearTimeout: id => timers.delete(id),
@@ -18,6 +18,7 @@ function createPage() {
   }
   vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../pages/detect/index.js'), 'utf8'), sandbox)
   const page = { ...definition, data: structuredClone(definition.data), setData(value) { Object.assign(this.data, value) } }
+  page.onInput({ detail: { value: '先垫付保证金' } })
   const tick = () => {
     const callbacks = [...timers.values()]
     timers.clear()

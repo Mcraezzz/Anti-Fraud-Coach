@@ -10,7 +10,7 @@ A mobile anti-fraud coach for university students, demonstrating recognition, ri
 
 - **Technology:** WeChat Mini Program JavaScript / WXML / WXSS, Skyline, and glass-easel.
 - **Entry points and directories:** `app.js`, `app.json`, `app.wxss`, `pages/`, `components/`, `assets/`, `styles/`, `utils/`, and `project.config.json`.
-- **Current status:** UI and navigation prototype. Recognition uses a simulated page transition; results and training content are predefined. No real OCR, RAG, or model API is connected.
+- **Current status:** UI and navigation prototype with local keyword screening for text, SMS, and URL text. Results show actual matched words, without model scores or confidence. Training and statistics remain demo data. No real OCR, RAG, or model API is connected.
 - **Preview:** Import the repository root into WeChat DevTools, configure an AppID as needed, and use an environment supporting Skyline.
 
 Details: [Mini Program project](docs/mini-program.en.md).
@@ -42,9 +42,9 @@ These similarities concern goals and design; they do not imply shared algorithms
 | Primary purpose | Mobile product experience and interaction demonstration | Anti-fraud retrieval, analysis, and technical validation |
 | Runtime | WeChat DevTools / Mini Program environment | Python CLI / Streamlit browser interface |
 | Main languages | JavaScript, WXML, WXSS | Python; TypeScript / React for the companion UI prototype |
-| Recognition workflow | Predefined UI and timed navigation | Preprocessing, risk features, entity extraction, hybrid retrieval, and analysis generation |
+| Recognition workflow | Local keyword screening, input validation, and current-input matches | Preprocessing, risk features, entity extraction, hybrid retrieval, and analysis generation |
 | OCR | UI entry point without actual recognition integration | PaddleOCR integration in the Streamlit flow, requiring dependencies and models |
-| Evidence and results | Predefined page content | Local knowledge base, rules, and optional Qwen calls, with simulated fallback |
+| Evidence and results | Matched local-rule keywords; predefined general advice | Local knowledge base, rules, and optional Qwen calls, with simulated fallback |
 | Q&A and training | UI demonstrations of Q&A, scenarios, and ability reports | Analysis may include training questions; not a complete online learning platform |
 | Data and dependencies | UI preview needs no Python models or indexes | Full functionality requires local data, models, indexes, and optional API credentials |
 | Validation focus | Layout, navigation, and interaction flow | Retrieved evidence, analysis output, OCR, and model-call behavior |

@@ -84,3 +84,5 @@ scroll-view {
 .anim-fade-up {
   animation: afcFadeUp 260ms ease forwards;
 }
+
+.demo-notice { padding: 16rpx 20rpx; margin-bottom: 20rpx; border-radius: 12rpx; color: #174d3c; background: #e8fff6; font-size: 24rpx; line-height: 36rpx; }

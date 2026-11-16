@@ -2,29 +2,32 @@
   <mp-navigation-bar title="识别结果" background="#f5f8ff" color="#0B1F3A" />
   <scroll-view class="result-scroll" scroll-y enhanced show-scrollbar="{{false}}">
     <view class="content">
+      <view wx:if="{{!hasResult}}" class="result-card hairline-card"><text class="card-title">暂无筛查结果</text><text class="source-line">请先输入内容，再查看本次匹配的关键词。</text><button class="training-cta" bindtap="goDetect">前往筛查</button></view>
+      <block wx:if="{{hasResult}}">
       <view class="risk-overview">
-        <view class="risk-top"><brand-logo size="mini" show-name="{{false}}" /><text class="risk-badge">高风险</text></view>
-        <view class="gauge"><text class="gauge-score">87</text><text class="gauge-label">风险评分 / 100</text></view>
+        <view class="risk-top"><brand-logo size="mini" show-name="{{false}}" /><text class="risk-badge">{{summary}}</text></view>
+        <view class="gauge"><text class="gauge-score">{{count}}</text><text class="gauge-label">命中规则类别</text></view>
         <view class="risk-meta">
-          <view><text class="meta-label">疑似类型</text><text class="meta-value">刷单返利 / 虚假兼职</text></view>
-          <view><text class="meta-label">置信度</text><text class="meta-value">92%</text></view>
+          <view><text class="meta-label">分析方式</text><text class="meta-value">本地关键词匹配</text></view>
+          <view><text class="meta-label">模型状态</text><text class="meta-value">未接入 AI</text></view>
         </view>
       </view>
       <view class="result-card hairline-card">
-        <text class="card-title">发现 4 个可疑风险点</text>
+        <text class="card-title">命中 {{count}} 类待核实词语</text>
         <view class="signal-row"><text wx:for="{{signals}}" wx:key="label" class="pill pill-{{item.tone}}">{{item.label}}</text></view>
       </view>
       <view class="result-card hairline-card">
-        <text class="card-title">证据高亮</text>
-        <view class="evidence-box"><text>“需要你</text><text class="highlight-red">先垫付 300 元保证金</text><text>，完成任务后</text><text class="highlight-amber">马上返现</text><text>，不要告诉其他人。”</text></view>
-        <view class="explain-box"><text>“先支付费用”是刷单、兼职、贷款类骗局的高频特征。</text></view>
+        <text class="card-title">本次匹配词语</text>
+        <view class="evidence-box"><text>{{evidence || '未命中当前关键词；这不代表内容安全。'}}</text></view>
+        <view class="explain-box"><text>{{explanation}}</text></view>
       </view>
       <view class="result-card hairline-card">
-        <text class="card-title">建议动作</text>
+        <text class="card-title">通用核实建议（非个性化判断）</text>
         <view wx:for="{{actions}}" wx:key="*this" class="action-item"><view class="action-dot"></view><text>{{item}}</text></view>
       </view>
-      <view class="source-card"><text class="source-title">参考依据</text><text class="source-line">校园兼职诈骗防范条目 · 刷单返利典型案例 · 知识库版本 v1.0</text></view>
-      <view class="training-cta" bind:tap="goTraining"><text>进入同类情景训练</text></view>
+      <view class="source-card"><text class="source-title">结果来源</text><text class="source-line">内置演示规则，无模型置信度，无外部知识库检索。</text></view>
+      <view class="training-cta" bind:tap="goTraining"><text>查看情景训练演示</text></view>
+      </block>
     </view>
   </scroll-view>
 </view>

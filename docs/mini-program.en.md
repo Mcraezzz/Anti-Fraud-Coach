@@ -21,7 +21,9 @@ Built with JavaScript, WXML, WXSS, the WeChat Mini Program Skyline renderer, and
 
 ## Existing Behavior and Implementation Boundaries
 
-The screens include recognition entry points for text, screenshot OCR, links, and SMS, alongside risk signals, suggested actions, and training scenarios. These are currently UI demonstrations: the recognition button navigates to the results page after a timer, while result labels and advice are predefined. The Q&A and training pages do not implement online model conversations or a complete training evaluation service.
+Text, SMS, and URL text support local keyword screening of 1–800 characters. Results show words matched in the current submission and the number of matching rule categories, not a fixed risk score or confidence. URLs are not visited or checked against reputation services. Rules cannot understand negation or context; no match does not mean safe. Input is neither uploaded nor persisted. Only matched keywords are passed to the result page through its event channel.
+
+Screenshot OCR is not connected; submission is disabled with a text-input alternative. Q&A, training, statistics, and administration pages are explicitly marked as demonstrations. Online model conversations, training evaluation, and backend services remain unimplemented. General verification advice is predefined.
 
 The current `pages/` code does not call `wx.request` or cloud functions. Therefore, its OCR, RAG Q&A, and report displays should not be interpreted as connected algorithms. User information, ability statistics, and administration displays do not constitute an implemented backend data system.
 
@@ -41,4 +43,10 @@ Both projects share the campus anti-fraud theme and the recognition–explanatio
 
 The recognition flow prevents repeated taps and clears pending navigation when the page is hidden, unloaded, or its input mode changes. Invalid launch modes fall back to text. Recognition remains a prototype demonstration; these changes do not connect it to RAG.
 
-From the repository root, run `node --test tests/mini_program.test.cjs` with Node.js 18 or later. Tests use mocked WeChat APIs and timers to check interaction logic; they do not replace device or rendering checks in WeChat DevTools.
+Requires Node.js 18 or newer, with no npm dependencies:
+
+```sh
+node --test tests/*.test.cjs
+```
+
+Covers input limits, dynamic results, exclusion of submitted sensitive values from results, repeated submissions, hide/unload cancellation, navigation retry, empty results, tab navigation, and source completeness. Skyline compilation, WeUI layout, keyboards, and device navigation still require WeChat DevTools/device verification. Node tests do not replace host-runtime validation.

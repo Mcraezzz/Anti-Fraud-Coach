@@ -31,16 +31,22 @@ const tabbarList = [
   }
 ]
 
+let navigating = false
+
 function goTab(index) {
   const target = tabbarList[index]
-  if (!target) return
+  if (!target || navigating) return
 
   const pages = getCurrentPages()
   const current = pages.length ? `/${pages[pages.length - 1].route}` : ''
   if (current === target.url) return
 
-  wx.redirectTo({
-    url: target.url
+  navigating = true
+  // Custom tabs reset nested detail pages instead of growing the page stack.
+  wx.reLaunch({
+    url: target.url,
+    fail: () => wx.showToast({ title: '页面打开失败，请重试', icon: 'none' }),
+    complete: () => { navigating = false }
   })
 }
 

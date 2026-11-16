@@ -4,6 +4,7 @@
   </mp-navigation-bar>
   <scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
     <view class="content">
+      <view class="demo-notice"><text>演示页面：统计、问答与训练内容为预置示例，尚未接入个人数据或 AI 服务。</text></view>
       <view class="camp-card">
         <text class="camp-title">反诈训练营</text>
         <text class="camp-subtitle">当前等级：Lv.3 风险识别新手</text>
