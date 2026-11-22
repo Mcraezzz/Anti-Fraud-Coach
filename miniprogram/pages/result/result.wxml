@@ -1,0 +1,75 @@
+<view class="page">
+  <view class="panel hero risk-overview">
+    <view class="risk-top"><brand-logo size="mini" show-name="{{false}}" /><view class="risk-badge" style="{{result.riskBadgeStyle}}">{{result.risk_level}}</view></view>
+    <view class="gauge" style="{{result.gaugeStyle}}"><view class="gauge-score">{{result.risk_score}}</view><view class="gauge-label">风险评分 / 100</view></view>
+    <view class="risk-meta">
+      <view><view class="meta-label">疑似类型</view><view class="meta-value">{{result.scam_type}}</view></view>
+      <view><view class="meta-label">置信度</view><view class="meta-value">{{result.confidence}}%</view></view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-title">风险依据</view>
+    <view class="summary">{{result.summary}}</view>
+    <view class="evidence-box">
+      <block wx:for="{{result.highlighted_segments}}" wx:key="index">
+        <text wx:if="{{item.risk}}" class="risk-fragment"><text class="risk-marker">!</text>{{item.text}}</text>
+        <text wx:else>{{item.text}}</text>
+      </block>
+    </view>
+  </view>
+
+  <view wx:if="{{result.model_insights.length}}" class="panel">
+    <view class="section-title">多维度风险分析</view>
+    <block wx:for="{{result.model_insights}}" wx:key="index">
+      <view class="model-row">
+        <view class="model-head"><text>{{item.model}}</text><text class="model-status">{{item.status}}</text></view>
+        <view wx:if="{{item.label}}" class="model-label">{{item.label}} <text wx:if="{{item.score}}">· {{item.score}}</text></view>
+        <view class="model-detail">{{item.detail}}</view>
+      </view>
+    </block>
+  </view>
+
+  <view wx:if="{{result.enhanced_advice}}" class="panel advice-panel">
+    <view class="section-title">专家建议</view>
+    <view class="summary">{{result.enhanced_advice}}</view>
+  </view>
+
+  <view wx:if="{{ocr}}" class="panel">
+    <view class="section-title">截图识别与时间线</view>
+    <view class="ocr-meta">{{ocr.engine}} · 文本区域 {{ocr.regions.length}} 个 · 还原消息 {{ocr.messages.length}} 条 · 已自动脱敏</view>
+    <block wx:for="{{ocr.messages}}" wx:key="order">
+      <view class="timeline-row {{item.speaker == 'self' ? 'timeline-self' : ''}}">
+        <view class="timeline-head">{{item.timestamp}} {{item.speaker == 'self' ? '我方' : item.speaker == 'other' ? '对方' : '系统'}}</view>
+        <view class="timeline-text">{{item.text}}</view>
+      </view>
+    </block>
+  </view>
+
+  <view class="panel">
+    <view class="section-title">风险信号</view>
+    <block wx:for="{{result.signals}}" wx:key="index">
+      <view class="signal-row">
+        <view><text class="pill pill-red">{{item.label}}</text><text class="pill pill-amber">{{item.keyword}}</text></view>
+        <view class="signal-desc">{{item.explanation}}</view>
+      </view>
+    </block>
+  </view>
+
+  <view class="panel">
+    <view class="section-title">建议动作</view>
+    <block wx:for="{{result.suggestions}}" wx:key="index">
+      <view class="action-item"><view class="action-dot"></view><text>{{item}}</text></view>
+    </block>
+  </view>
+
+  <view class="source-card">
+    <view class="source-title">参考依据</view>
+    <view class="source-line">校园兼职诈骗防范条目 · 刷单返利典型案例 · 知识库版本 v1.0</view>
+  </view>
+  <view class="button-row result-actions">
+    <button class="ghost-btn" bindtap="copySuggestions">复制建议</button>
+    <button class="primary-btn" bindtap="goTraining">开始同类训练</button>
+  </view>
+  <button class="ghost-btn rescan-btn" bindtap="rescan">重新检测一条信息</button>
+</view>

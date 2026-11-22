@@ -1,0 +1,76 @@
+<view class="qa-page">
+  <coach-safe />
+  <view class="compact-header">
+    <view class="inline">
+      <button class="back" bindtap="back"><ui-icon name="chevron-left" tone="slate" /></button>
+      <view>
+        <view class="compact-title inline">
+          AI 反诈顾问
+          <ui-icon name="shield" size="{{14}}" />
+        </view>
+        <view class="mini">校园知识库支撑 · 不作法律定性</view>
+      </view>
+    </view>
+  </view>
+  <scroll-view scroll-y class="qa-feed" scroll-into-view="{{scrollTarget}}">
+    <view wx:for="{{messages}}" wx:key="id" class="bubble {{item.role}}">
+      <text style="white-space: pre-wrap">{{item.content}}</text>
+      <view
+        wx:if="{{item.references.length}}"
+        style="border-top: 1px solid #f1f5f9; margin-top: 12px; padding-top: 10px"
+      >
+        <view class="inline mini" style="font-weight: 600; margin-bottom: 4px">
+          <ui-icon name="book-open" tone="slate" size="{{11}}" />
+          参考依据
+        </view>
+        <view
+          wx:for="{{item.references}}"
+          wx:for-item="reference"
+          wx:key="title"
+          class="mini"
+          style="color: #64748b"
+        >
+          {{reference.title}} · {{reference.category}}
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{busy}}" class="bubble assistant muted">正在检索校园防诈知识库并分析...</view>
+    <view wx:if="{{error}}" class="error">
+      {{error}}
+      <button class="link" bindtap="send">重新发送</button>
+    </view>
+    <view id="conversation-end" style="height: 1px" />
+  </scroll-view>
+  <view class="qa-prompts">
+    <scroll-view scroll-x class="chip-scroll">
+      <button
+        wx:for="{{prompts}}"
+        wx:key="*this"
+        class="chip"
+        data-text="{{item}}"
+        bindtap="prompt"
+        disabled="{{busy}}"
+      >
+        {{item}}
+      </button>
+    </scroll-view>
+  </view>
+  <view class="qa-input">
+    <view class="qa-input-box">
+      <input
+        value="{{text}}"
+        bindinput="input"
+        maxlength="4000"
+        disabled="{{busy}}"
+        bindconfirm="send"
+        confirm-type="send"
+        placeholder="描述你遇到的可疑情况或话术..."
+        placeholder-style="color:#94A3B8"
+      />
+      <button class="send" bindtap="send" disabled="{{busy || !text}}" aria-label="发送问题">
+        <ui-icon name="send" tone="white" size="{{16}}" />
+      </button>
+    </view>
+  </view>
+  <coach-nav active="qa" />
+</view>

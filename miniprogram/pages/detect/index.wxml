@@ -1,0 +1,131 @@
+<view class="page">
+  <coach-safe />
+  <view class="header" style="padding-top: 24px">
+    <view class="title inline">
+      <ui-icon name="shield-check" />
+      智能风险识别
+    </view>
+    <view class="subtitle">支持文本、聊天截图 OCR、可疑网址与短信多模态分析</view>
+    <view class="tabs">
+      <button
+        wx:for="{{tabs}}"
+        wx:key="id"
+        class="tab {{mode===item.id?'active':''}}"
+        data-mode="{{item.id}}"
+        bindtap="switchMode"
+        disabled="{{busy}}"
+      >
+        <ui-icon name="{{item.icon}}" tone="{{mode===item.id?'ink':'slate'}}" size="{{14}}" />
+        {{item.label}}
+      </button>
+    </view>
+  </view>
+  <view class="content">
+    <block wx:if="{{mode!=='ocr'}}">
+      <view class="inline mini" style="margin-bottom: 8px">
+        <ui-icon name="sparkles" size="{{12}}" />
+        典型诈骗样本一键填入体验
+      </view>
+      <scroll-view scroll-x class="chip-scroll">
+        <button
+          wx:for="{{presets}}"
+          wx:key="id"
+          class="chip"
+          data-id="{{item.id}}"
+          bindtap="preset"
+          disabled="{{busy}}"
+        >
+          {{item.label}}
+        </button>
+      </scroll-view>
+    </block>
+    <view class="card scanner-card">
+      <block wx:if="{{mode==='ocr'}}">
+        <view wx:if="{{!image}}" class="upload-zone" bindtap="choose">
+          <view
+            class="icon-box"
+            style="border-radius: 50%; width: 48px; height: 48px; margin-bottom: 10px"
+          >
+            <ui-icon name="upload" size="{{22}}" />
+          </view>
+          <view style="font-weight: 600">点击上传聊天或转账截图</view>
+          <view class="subtitle">支持 JPG / PNG / WebP · 自动提取文字并识诈</view>
+        </view>
+        <block wx:else>
+          <image class="preview-image" src="{{image}}" mode="aspectFit" />
+          <view class="row">
+            <view class="mini">已选择截图 · 最大 6MB</view>
+            <view class="inline">
+              <button class="link" bindtap="choose">更换</button>
+              <button class="icon-button" bindtap="clear">
+                <ui-icon name="trash-2" tone="red" size="{{14}}" />
+              </button>
+            </view>
+          </view>
+        </block>
+      </block>
+      <view wx:elif="{{mode==='url'}}" style="flex: 1; padding-top: 30px">
+        <view class="muted" style="font-weight: 600">可疑网站或短链接地址</view>
+        <input
+          class="field"
+          value="{{text}}"
+          bindinput="input"
+          disabled="{{busy}}"
+          maxlength="500"
+          placeholder="https://example.com/verify"
+        />
+        <view class="muted">
+          系统将分析域名结构、伪装特征与常见校园钓鱼路径，无需亲自点开链接。
+        </view>
+      </view>
+      <textarea
+        wx:else
+        class="scanner-text"
+        value="{{text}}"
+        bindinput="input"
+        disabled="{{busy}}"
+        maxlength="1000"
+        placeholder="{{mode==='sms'?'请粘贴收到的快递理赔、校园补贴、银行异常或运营商短信完整内容...':'请粘贴可疑聊天记录、兼职招募话术或微信/QQ对话内容...'}}"
+        placeholder-style="color:#94A3B8"
+      />
+      <view class="scanner-meta row">
+        <view class="inline">
+          <ui-icon name="lock-keyhole" tone="green" size="{{12}}" />
+          <text>{{masking?'隐私脱敏保护已开启':'脱敏保护已关闭'}}</text>
+        </view>
+        <view class="inline">
+          <button
+            wx:if="{{text.length}}"
+            class="link"
+            style="font-size: 11px; color: #94a3b8"
+            bindtap="clear"
+          >
+            清空
+          </button>
+          <text>{{text.length}}/1000</text>
+        </view>
+      </view>
+      <view wx:if="{{busy}}" class="scan-overlay">
+        <view class="scan-pulse"><ui-icon name="shield-check" size="{{26}}" /></view>
+        <view class="list-title">正在提取特征与分析风险...</view>
+        <view class="mini" style="margin-top: 12px">
+          提取文本特征 · 匹配诈骗信号 · 生成处置建议
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{error}}" class="error row">
+      <text class="grow">{{error}}</text>
+      <button class="link" bindtap="scan">重试</button>
+    </view>
+    <button
+      class="primary"
+      bindtap="scan"
+      disabled="{{busy || (mode==='ocr'?!image:!text)}}"
+      loading="{{busy}}"
+    >
+      {{busy?'正在智能扫描风险...':'开始智能识别'}}
+    </button>
+    <view class="footer-note">本次识别基于反诈特征与 AI 分析，仅作风险辅助判断，不作法律定性</view>
+  </view>
+  <coach-nav active="detect" />
+</view>

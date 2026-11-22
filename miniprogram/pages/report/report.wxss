@@ -1,0 +1,224 @@
+/* ===== Report Hero ===== */
+.report-hero {
+  min-height: 360rpx;
+  padding: 36rpx;
+}
+
+.report-title {
+  margin-top: 20rpx;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+/* Score Row */
+.score-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 24rpx;
+}
+
+.score-main {
+  color: #FFFFFF;
+  font-size: 72rpx;
+  font-weight: 700;
+  line-height: 80rpx;
+}
+
+.score-desc {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 24rpx;
+  margin-top: 4rpx;
+}
+
+.level-pill {
+  padding: 14rpx 22rpx;
+  border-radius: 24rpx;
+  color: #FFFFFF;
+  background: #047857;
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.level-excellent {
+  background: #0F766E;
+}
+
+.level-good {
+  background: #047857;
+}
+
+.level-mid {
+  background: #D97706;
+}
+
+.level-low {
+  background: #DC2626;
+}
+
+.week-up {
+  margin-top: 24rpx;
+  color: #34D399;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+/* ===== Radar Card ===== */
+.radar-card {
+  padding: 28rpx 24rpx 18rpx;
+}
+
+.radar-title {
+  margin-bottom: 8rpx;
+}
+
+.radar-stage {
+  width: 100%;
+  height: 640rpx;
+}
+
+.radar-canvas {
+  width: 100%;
+  height: 640rpx;
+  display: block;
+}
+
+/* ===== Ability Bars ===== */
+.ability-row {
+  display: flex;
+  align-items: center;
+  min-height: 64rpx;
+  color: var(--text-main);
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.ability-label {
+  width: 160rpx;
+  flex-shrink: 0;
+}
+
+.ability-track {
+  flex: 1;
+  height: 12rpx;
+  margin: 0 16rpx;
+  border-radius: 12rpx;
+  background: #E2E8F0;
+  overflow: hidden;
+  position: relative;
+}
+
+.ability-fill {
+  height: 100%;
+  border-radius: 12rpx;
+  background: var(--primary);
+}
+
+.ability-value {
+  width: 56rpx;
+  text-align: right;
+  color: var(--text-secondary);
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.empty-text {
+  min-height: 72rpx;
+  display: flex;
+  align-items: center;
+  color: var(--text-tertiary);
+  font-size: 26rpx;
+}
+
+/* ===== Rank List ===== */
+.rank-row {
+  display: flex;
+  align-items: center;
+  height: 64rpx;
+  color: var(--text-main);
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.rank-index {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 16rpx;
+  border-radius: 50%;
+  color: #FFFFFF;
+  background: #D97706;
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.rank-value {
+  margin-left: auto;
+  color: var(--text-secondary);
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+/* ===== Suggest Card ===== */
+.suggest-card {
+  margin-bottom: 24rpx;
+  padding: 28rpx;
+  border-radius: var(--radius-md);
+  color: #065F46;
+  background: #F0FDF4;
+  border: 1rpx solid #BBF7D0;
+}
+
+.suggest-title {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.suggest-body {
+  margin-top: 10rpx;
+  font-size: 26rpx;
+  line-height: 44rpx;
+}
+
+/* ===== Resource Rows ===== */
+.resource-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid var(--border);
+}
+
+.resource-row > view:first-child {
+  flex: 1;
+  min-width: 0;
+  margin-right: 20rpx;
+}
+
+.resource-label {
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 28rpx;
+}
+
+.resource-path {
+  color: var(--text-tertiary);
+  font-size: 24rpx;
+  word-break: break-all;
+  margin-top: 4rpx;
+}
+
+.exists {
+  color: #059669;
+  font-weight: 600;
+  font-size: 26rpx;
+}
+
+.missing {
+  color: #DC2626;
+  font-weight: 600;
+  font-size: 26rpx;
+}

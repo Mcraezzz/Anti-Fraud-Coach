@@ -1,0 +1,176 @@
+<view class="page">
+  <coach-safe />
+  <view class="profile-header">
+    <view class="avatar"><ui-icon name="circle-user" size="{{46}}" /></view>
+    <view class="title">{{profile.name || '校园同学'}}</view>
+    <view class="subtitle">校园反诈学习者</view>
+    <view class="profile-metrics row">
+      <view class="metric">
+        <view class="number">{{report.scanCount || 0}} 次</view>
+        <view class="muted">累计识别</view>
+      </view>
+      <view class="metric" style="border-left: 1px solid #f1f5f9; border-right: 1px solid #f1f5f9">
+        <view class="number">{{report.completed || 0}}/6</view>
+        <view class="muted">通关情景</view>
+      </view>
+      <view class="metric">
+        <view class="number blue">
+          {{!report || report.safetyScore===null?'—':report.safetyScore}} 分
+        </view>
+        <view class="muted">安全指数</view>
+      </view>
+    </view>
+  </view>
+  <view class="content">
+    <view wx:if="{{error}}" class="error">
+      {{error}}
+      <button class="link" bindtap="load">重新连接</button>
+    </view>
+    <view class="card menu-card">
+      <view class="menu-row" role="button" data-sheet="history" bindtap="openSheet">
+        <view class="inline">
+          <ui-icon name="history" size="{{19}}" />
+          <text>我的识别记录</text>
+        </view>
+        <view class="inline mini">
+          {{report.scanCount || 0}} 条
+          <ui-icon name="chevron-right" tone="muted" size="{{16}}" />
+        </view>
+      </view>
+      <view class="menu-row" role="button" data-sheet="privacy" bindtap="openSheet">
+        <view class="inline">
+          <ui-icon name="shield-check" tone="green" size="{{19}}" />
+          <text>隐私保护设置</text>
+        </view>
+        <view class="inline mini">
+          {{profile.preferences.autoMaskSensitive?'脱敏已开启':'未开启'}}
+          <ui-icon name="chevron-right" tone="muted" size="{{16}}" />
+        </view>
+      </view>
+      <view class="menu-row" role="button" data-sheet="preferences" bindtap="openSheet">
+        <view class="inline">
+          <ui-icon name="settings" tone="slate" size="{{19}}" />
+          <text>系统偏好设置</text>
+        </view>
+        <ui-icon name="chevron-right" tone="muted" size="{{16}}" />
+      </view>
+    </view>
+    <view class="muted" style="font-weight: 600; margin: 0 4px 8px">辅导员与校园安全管理</view>
+    <view class="card row" role="button" bindtap="go" data-url="/pages/admin/index">
+      <view class="icon-box"><ui-icon name="chart-no-axes-column" /></view>
+      <view class="grow">
+        <view class="list-title">校园安全数据看板</view>
+        <view class="subtitle">查看训练覆盖率与高发骗局统计</view>
+      </view>
+      <ui-icon name="chevron-right" tone="muted" size="{{18}}" />
+    </view>
+  </view>
+  <coach-sheet
+    open="{{!!activeSheet}}"
+    title="{{sheetTitle || ''}}"
+    subtitle="{{sheetSubtitle || ''}}"
+    bindclose="closeSheet"
+  >
+    <block wx:if="{{activeSheet==='privacy'}}">
+      <view class="sheet-toggle row">
+        <view class="grow">
+          <view class="list-title">自动脱敏敏感信息</view>
+          <view class="subtitle">对手机号、身份证号及验证码等常见敏感信息进行星号掩码</view>
+        </view>
+        <switch
+          checked="{{profile.preferences.autoMaskSensitive}}"
+          color="#1E63FF"
+          data-key="autoMaskSensitive"
+          bindchange="preference"
+        />
+      </view>
+      <view class="source-box muted">
+        你可以随时清除当前设备会话的识别记录。训练进度与记录存储位置以当前运行版本为准。
+      </view>
+      <button
+        class="chip"
+        style=" width: 100%; justify-content: center; margin-top: 16px; color: #ff4d4f; border-color: #fecaca; min-height: 44px; "
+        bindtap="clearHistory"
+      >
+        <ui-icon name="trash-2" tone="red" size="{{14}}" />
+        清空全部识别记录
+      </button>
+    </block>
+    <block wx:elif="{{activeSheet==='preferences'}}">
+      <view class="sheet-toggle row">
+        <view class="grow">
+          <view class="list-title">流畅界面过渡动效</view>
+          <view class="subtitle">开启底部抽屉的过渡动画</view>
+        </view>
+        <switch checked="{{motion}}" color="#1E63FF" bindchange="toggleMotion" />
+      </view>
+      <view class="sheet-toggle row">
+        <view class="grow">
+          <view class="list-title">每周防诈薄弱项提醒</view>
+          <view class="subtitle">在首页展示待强化训练情景卡片</view>
+        </view>
+        <switch
+          checked="{{profile.preferences.weeklyReminder}}"
+          color="#1E63FF"
+          data-key="weeklyReminder"
+          bindchange="preference"
+        />
+      </view>
+      <button
+        class="chip"
+        style="width: 100%; justify-content: center; min-height: 44px"
+        bindtap="resetTraining"
+      >
+        <ui-icon name="rotate-ccw" tone="slate" size="{{14}}" />
+        重置训练进度与能力评估
+      </button>
+      <view class="divider" />
+      <button class="link" bindtap="settings">个人资料与后端连接设置</button>
+      <view wx:if="{{showSettings}}">
+        <input
+          class="field"
+          value="{{name}}"
+          bindinput="inputName"
+          maxlength="24"
+          placeholder="昵称"
+        />
+        <button class="secondary" bindtap="save">保存昵称</button>
+        <input class="field" value="{{base}}" bindinput="inputBase" placeholder="后端服务地址" />
+        <button class="secondary" bindtap="saveBase">保存并连接</button>
+        <button class="link" bindtap="reset">会话失效？重新连接</button>
+      </view>
+    </block>
+    <block wx:elif="{{activeSheet==='history'}}">
+      <view wx:if="{{!history.length}}" class="empty">
+        <view class="list-title">暂无历史识别记录</view>
+        <view class="subtitle">去智能识别页检测一段可疑文本或截图试试吧</view>
+        <button class="primary" data-url="/pages/detect/index" bindtap="go">前往识别</button>
+      </view>
+      <view
+        wx:for="{{history}}"
+        wx:key="id"
+        class="card row"
+        bindtap="openHistory"
+        data-id="{{item.id}}"
+      >
+        <view class="grow">
+          <view class="inline mini">
+            <text class="{{item.riskLevel}}" style="background: none; font-weight: 700">
+              {{item.riskScore}}分
+            </text>
+            ·
+            <text class="list-title" style="font-size: 11px">{{item.scamType}}</text>
+          </view>
+          <view
+            class="subtitle"
+            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
+          >
+            {{item.extractedText}}
+          </view>
+        </view>
+        <ui-icon name="chevron-right" tone="muted" size="{{16}}" />
+      </view>
+    </block>
+  </coach-sheet>
+  <coach-nav active="profile" />
+</view>

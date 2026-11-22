@@ -1,0 +1,31 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/detect/index",
+    "pages/result/index",
+    "pages/qa/index",
+    "pages/training/index",
+    "pages/training-detail/index",
+    "pages/report/index",
+    "pages/profile/index",
+    "pages/history/index",
+    "pages/admin/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "Anti-Fraud Coach",
+    "navigationBarBackgroundColor": "#F5F8FF",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F5F8FF",
+    "navigationStyle": "custom"
+  },
+  "usingComponents": {
+    "coach-nav": "/components/coach-nav/index",
+    "ui-icon": "/components/ui-icon/index",
+    "coach-safe": "/components/coach-safe/index",
+    "coach-sheet": "/components/coach-sheet/index",
+    "coach-gauge": "/components/coach-gauge/index"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

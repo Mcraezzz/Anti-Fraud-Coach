@@ -1,0 +1,25 @@
+{
+  "active_version": "2026.05-rag-final",
+  "released_at": "2026-05-21",
+  "maintainer": "Anti-Fraud Coach 项目组",
+  "description": "面向大学生常见网络诈骗场景的反诈知识库，支持语义检索、案例引用和版本追踪。",
+  "changelog": [
+    {
+      "version": "2026.05-rag-final",
+      "date": "2026-05-21",
+      "changes": [
+        "接入 BGE-M3 语义检索和向量索引",
+        "接入 FAISS/Chroma 检索后端",
+        "增加 reranker 重排、案例引用和知识库版本信息"
+      ]
+    },
+    {
+      "version": "2026.05-mvp",
+      "date": "2026-05-21",
+      "changes": [
+        "建立刷单返利、冒充客服、虚假兼职、校园贷、游戏交易、冒充熟人等基础知识条目",
+        "实现轻量关键词检索问答"
+      ]
+    }
+  ]
+}

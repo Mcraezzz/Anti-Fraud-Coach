@@ -1,0 +1,105 @@
+<view class="page">
+  <coach-safe dark />
+  <view class="hero">
+    <view class="row">
+      <view>
+        <view class="title">Anti-Fraud Coach</view>
+        <view class="subtitle">AI 校园反诈情景识别助手</view>
+      </view>
+      <image
+        class="brand-logo"
+        src="/assets/logo/afc-logo-v6-light.svg"
+        bindtap="go"
+        data-url="/pages/profile/index"
+      />
+    </view>
+    <view class="hero-panel row">
+      <view class="inline grow" style="gap: 14px">
+        <coach-gauge score="{{report.safetyScore}}" size="{{64}}" />
+        <view>
+          <view class="muted">当前防诈安全指数</view>
+          <view class="hero-name">
+            {{report.safetyScore===null || !report?'完成训练后生成评估':report.safetyScore>=85?'防护状态良好':report.safetyScore>=70?'建议巩固薄弱项':'风险防范待提升'}}
+          </view>
+        </view>
+      </view>
+      <view class="hero-stats">
+        <view class="muted">已识别风险</view>
+        <view class="value">{{report.riskCount || 0}} 次</view>
+        <view class="muted" style="margin-top: 8px">训练完成度</view>
+        <view class="value">{{report.completion || 0}}%</view>
+      </view>
+    </view>
+  </view>
+  <view class="content" style="padding-top: 20px">
+    <view wx:if="{{error}}" class="error">
+      {{error}}
+      <button class="link" bindtap="load">重试</button>
+    </view>
+    <view class="row" style="margin-bottom: 12px">
+      <view class="section-title" style="font-size: 16px; margin: 0">立即检测可疑信息</view>
+      <button class="link inline" bindtap="go" data-url="/pages/detect/index">
+        全部方式
+        <ui-icon name="chevron-right" size="{{14}}" />
+      </button>
+    </view>
+    <view class="grid">
+      <view
+        wx:for="{{entries}}"
+        wx:key="mode"
+        class="action half"
+        role="button"
+        data-url="/pages/detect/index?mode={{item.mode}}"
+        bindtap="go"
+      >
+        <view class="icon-box"><ui-icon name="{{item.icon}}" size="{{20}}" /></view>
+        <view class="label">{{item.title}}</view>
+        <view class="muted">{{item.sub}}</view>
+      </view>
+    </view>
+    <view class="grid" style="margin-top: 8px">
+      <view class="card half row module" role="button" bindtap="go" data-url="/pages/qa/index">
+        <view class="grow">
+          <view class="list-title">AI 问答</view>
+          <view class="muted">实时防骗知识库</view>
+        </view>
+        <view class="icon-box"><ui-icon name="message-square" size="{{18}}" /></view>
+      </view>
+      <view
+        class="card half row module"
+        role="button"
+        bindtap="go"
+        data-url="/pages/training/index"
+      >
+        <view class="grow">
+          <view class="list-title">情景训练</view>
+          <view class="muted">已通关 {{report.completed || 0}}/6 关</view>
+        </view>
+        <view class="icon-box orange-box">
+          <ui-icon name="target" tone="orange" size="{{18}}" />
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{reminder}}" class="card row" style="margin-top: 8px">
+      <view class="icon-box red-box"><ui-icon name="triangle-alert" tone="red" /></view>
+      <view class="grow">
+        <view class="list-title">待强化情景：{{report.weaknesses[0].title || '虚假兼职'}}</view>
+        <view class="muted">建议完成 1 次对抗演练消除盲区</view>
+      </view>
+      <button
+        class="primary small"
+        bindtap="go"
+        data-url="/pages/training-detail/index?id={{report.weaknesses[0].id || '1'}}"
+      >
+        去训练
+      </button>
+    </view>
+    <view class="notice inline" style="align-items: flex-start; margin-top: 20px">
+      <ui-icon name="shield-alert" tone="orange" size="{{16}}" />
+      <text>
+        涉及转账汇款、短信验证码、屏幕共享或脱离正规平台交易时，请先核实身份。紧急情况请立即联系辅导员或警方。
+      </text>
+    </view>
+  </view>
+  <coach-nav active="home" />
+</view>

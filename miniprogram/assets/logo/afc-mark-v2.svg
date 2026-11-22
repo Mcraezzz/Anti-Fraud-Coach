@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Anti-Fraud Coach logo v2</title>
+  <desc id="desc">A rounded app mark with a security shield, blocked message alert, and verification check.</desc>
+  <defs>
+    <linearGradient id="bg" x1="88" y1="84" x2="424" y2="432" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#081a33"/>
+      <stop offset="0.58" stop-color="#123d77"/>
+      <stop offset="1" stop-color="#1e63ff"/>
+    </linearGradient>
+    <linearGradient id="shield" x1="162" y1="128" x2="348" y2="380" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7db7ff"/>
+      <stop offset="0.48" stop-color="#1e63ff"/>
+      <stop offset="1" stop-color="#21c58b"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="174" y1="154" x2="338" y2="330" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.68"/>
+      <stop offset="0.52" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="shadow" x="8" y="8" width="496" height="496" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#0b1f3a" flood-opacity="0.18"/>
+    </filter>
+    <clipPath id="innerClip">
+      <rect x="70" y="70" width="372" height="372" rx="88"/>
+    </clipPath>
+  </defs>
+
+  <rect width="512" height="512" fill="none"/>
+  <rect x="42" y="42" width="428" height="428" rx="108" fill="#f5f8ff"/>
+  <rect x="70" y="70" width="372" height="372" rx="88" fill="url(#bg)" filter="url(#shadow)"/>
+
+  <g clip-path="url(#innerClip)" opacity="0.42">
+    <path d="M112 178H400M112 256H400M112 334H400M178 112V400M256 112V400M334 112V400" stroke="#dce7ff" stroke-width="2"/>
+    <circle cx="256" cy="256" r="150" fill="none" stroke="#7db7ff" stroke-width="8" stroke-opacity="0.22"/>
+    <path d="M112 310C160 214 246 170 382 172" fill="none" stroke="#7db7ff" stroke-width="11" stroke-linecap="round" stroke-opacity="0.46"/>
+    <path d="M386 338C302 390 214 390 130 330" fill="none" stroke="#21c58b" stroke-width="11" stroke-linecap="round" stroke-opacity="0.36"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <path d="M256 112L364 154C358 256 340 323 256 392C172 323 154 256 148 154L256 112Z" fill="url(#shield)" stroke="#dce7ff" stroke-width="12" stroke-linejoin="round"/>
+    <path d="M256 132L338 164C332 245 318 302 256 356C194 302 180 245 174 164L256 132Z" fill="url(#shine)"/>
+  </g>
+
+  <g>
+    <path d="M212 211H292C306 211 318 223 318 237V264C318 278 306 290 292 290H266L236 314V290H212C198 290 186 278 186 264V237C186 223 198 211 212 211Z" fill="#f8fbff"/>
+    <path d="M255 229V253" stroke="#ff4d4f" stroke-width="14" stroke-linecap="round"/>
+    <circle cx="255" cy="274" r="7" fill="#ff4d4f"/>
+    <path d="M204 304L318 190" stroke="#ffffff" stroke-width="29" stroke-linecap="round" opacity="0.9"/>
+    <path d="M204 304L318 190" stroke="#ff9f1c" stroke-width="16" stroke-linecap="round"/>
+  </g>
+
+  <g>
+    <circle cx="326" cy="318" r="33" fill="#21c58b" stroke="#f8fbff" stroke-width="10"/>
+    <path d="M309 318L322 331L345 304" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <g>
+    <circle cx="256" cy="124" r="15" fill="#ff4d4f"/>
+    <circle cx="152" cy="188" r="12" fill="#ff9f1c"/>
+    <circle cx="360" cy="188" r="12" fill="#21c58b"/>
+    <path d="M152 188L256 124L360 188" fill="none" stroke="#dce7ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.84"/>
+  </g>
+</svg>

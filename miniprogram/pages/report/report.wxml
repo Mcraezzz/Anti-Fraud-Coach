@@ -1,0 +1,65 @@
+<view class="page">
+  <view class="panel hero report-hero">
+    <brand-logo size="mini" show-name="{{false}}" />
+    <view class="report-title">我的反诈能力报告</view>
+    <view wx:if="{{dashboard}}" class="score-row">
+      <view><view class="score-main">{{dashboard.average_score}}</view><view class="score-desc">综合能力分</view></view>
+      <view class="level-pill level-{{dashboard.ability_level_class}}">{{dashboard.ability_level}}</view>
+    </view>
+    <view class="week-up">训练次数 {{dashboard.training_count}} · 高风险案例 {{dashboard.high_risk_cases}}</view>
+  </view>
+
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+  <view wx:if="{{loading}}" class="panel loading-card">正在生成能力报告...</view>
+
+  <view wx:if="{{dashboard}}" class="panel radar-card">
+    <view class="section-title radar-title">能力雷达图</view>
+    <view class="radar-stage">
+      <canvas type="2d" id="abilityRadar" canvas-id="abilityRadar" class="radar-canvas"></canvas>
+    </view>
+  </view>
+
+  <view wx:if="{{dashboard}}" class="panel">
+    <view class="section-title">能力维度</view>
+    <block wx:if="{{dashboard.radarItems.length}}">
+      <block wx:for="{{dashboard.radarItems}}" wx:key="label">
+        <view class="ability-row">
+          <view class="ability-label">{{item.label}}</view>
+          <view class="ability-track"><view class="ability-fill" style="width: {{item.value}}%;"></view></view>
+          <view class="ability-value">{{item.value}}</view>
+        </view>
+      </block>
+    </block>
+    <view wx:else class="empty-text">完成训练后生成能力维度。</view>
+  </view>
+
+  <view wx:if="{{dashboard}}" class="panel">
+    <view class="section-title">最易错类型</view>
+    <block wx:if="{{dashboard.top_error_types.length}}">
+      <block wx:for="{{dashboard.top_error_types}}" wx:key="label">
+        <view class="rank-row">
+          <text class="rank-index">{{index + 1}}</text><text>{{item.label}}</text><text class="rank-value">{{item.value}}</text>
+        </view>
+      </block>
+    </block>
+    <view wx:else class="empty-text">暂无明显易错类型，继续完成情景训练。</view>
+  </view>
+
+  <view class="suggest-card">
+    <view class="suggest-title">系统建议</view>
+    <view class="suggest-body">优先完成"虚假兼职"和"脱离平台交易"训练，重点练习付款前核实与证据保存。</view>
+  </view>
+
+  <view wx:if="{{resources}}" class="panel">
+    <view class="section-title">本地资源</view>
+    <block wx:for="{{resources.models}}" wx:key="label">
+      <view class="resource-row">
+        <view>
+          <view class="resource-label">{{item.label}}</view>
+          <view class="resource-path">{{item.path}}</view>
+        </view>
+        <view class="{{item.exists ? 'exists' : 'missing'}}">{{item.size_label || (item.exists ? '已就绪' : '缺失')}}</view>
+      </view>
+    </block>
+  </view>
+</view>

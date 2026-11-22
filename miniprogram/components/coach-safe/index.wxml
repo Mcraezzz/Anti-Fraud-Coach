@@ -1,0 +1,1 @@
+<view style="height:{{height}}px;background:{{dark?'#0B1F3A':'#ffffff'}};flex-shrink:0"></view>

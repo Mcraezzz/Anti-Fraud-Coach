@@ -1,0 +1,13 @@
+<view
+  class="gauge {{mode}}"
+  style="width:{{mode==='half'?176:size}}px;height:{{mode==='half'?106:size}}px"
+>
+  <canvas
+    canvas-id="gauge"
+    style="width:{{mode==='half'?176:size}}px;height:{{mode==='half'?98:size}}px"
+  />
+  <view class="value">
+    <text>{{score===null || score===undefined?'—':score}}</text>
+    <text wx:if="{{mode==='half'}}" class="unit">/ 100</text>
+  </view>
+</view>

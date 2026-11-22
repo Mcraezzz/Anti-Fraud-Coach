@@ -1,0 +1,7 @@
+<view class="brand brand-{{size}}">
+  <image class="brand-mark" src="/assets/logo/afc-logo-v6-light.svg" mode="aspectFit" />
+  <view wx:if="{{showName}}" class="brand-copy">
+    <text class="brand-name">{{name}}</text>
+    <text class="brand-tagline">{{tagline}}</text>
+  </view>
+</view>

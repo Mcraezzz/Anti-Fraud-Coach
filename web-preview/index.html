@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Anti-Fraud Coach Preview</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <h1>Anti-Fraud Coach</h1>
+          <p>小程序接口预览：风险识别、知识问答、情景训练、能力报告</p>
+        </div>
+        <span id="status" class="status">连接中</span>
+      </section>
+
+      <nav class="tabs">
+        <button class="tab active" data-tab="detect">识别</button>
+        <button class="tab" data-tab="train">训练</button>
+        <button class="tab" data-tab="report">报告</button>
+      </nav>
+
+      <section id="detect" class="view active">
+        <div class="panel">
+          <h2>可疑内容</h2>
+          <textarea id="content">我是平台客服，你的订单异常需要退款，请加微信打开屏幕共享并提供验证码。</textarea>
+          <div class="actions">
+            <button id="sample">刷单示例</button>
+            <button id="analyze" class="primary">识别风险</button>
+          </div>
+          <div class="upload-row">
+            <input id="ocrFile" type="file" accept="image/*" />
+            <button id="ocrAnalyze" class="primary">截图 OCR 识别</button>
+          </div>
+        </div>
+        <div id="ocrResult" class="panel result empty">等待上传聊天截图</div>
+        <div id="analysis" class="panel result empty">等待识别</div>
+
+        <div class="panel">
+          <h2>反诈知识问答</h2>
+          <input id="question" value="我已经转账了怎么办？" />
+          <button id="ask" class="primary wide">检索回答</button>
+        </div>
+        <div id="answer" class="panel result empty">等待提问</div>
+      </section>
+
+      <section id="train" class="view">
+        <div class="panel">
+          <h2>情景训练</h2>
+          <div id="questions">加载中</div>
+          <button id="submit" class="primary wide">提交训练</button>
+        </div>
+        <div id="trainingResult" class="panel result empty">等待提交</div>
+      </section>
+
+      <section id="report" class="view">
+        <div id="dashboard" class="panel result">加载中</div>
+        <div id="resources" class="panel result">加载中</div>
+      </section>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<view class="page">
+  <view class="panel hero coach-hero">
+    <view class="hero-top">
+      <brand-logo size="large" show-name="{{false}}" />
+    </view>
+    <view class="title">Anti-Fraud Coach</view>
+    <view class="subtitle">反诈情景识别与训练助手</view>
+    <view class="hero-line">识别可疑话术 · 解释风险依据 · 训练反诈能力</view>
+    <view class="security-row">
+      <view class="score-ring" style="{{scoreRingStyle}}">
+        <view class="score-number">{{safetyScore}}</view>
+        <view class="score-label">安全指数</view>
+      </view>
+      <view class="hero-metrics">
+        <view class="hero-metric"><text>已识别风险</text><text>{{identifiedRiskCount}} 次</text></view>
+        <view class="hero-metric"><text>本周训练进度</text><text>{{trainingProgress}}%</text></view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{serviceNotice}}" class="notice">{{serviceNotice}}</view>
+  <view wx:if="{{loadingOverview}}" class="panel loading-card">正在同步最新安全概览...</view>
+
+  <view class="panel">
+    <view class="section-title-row">
+      <view class="section-title">立即检测可疑信息</view>
+      <view class="link-text">自动脱敏</view>
+    </view>
+    <view class="scan-grid">
+      <view wx:for="{{scanEntrances}}" wx:key="type" class="scan-card" data-type="{{item.type}}" bindtap="goDetect">
+        <view class="scan-icon scan-icon-{{item.type}}">
+          <image class="scan-icon-img" src="{{item.icon}}" mode="aspectFit" />
+        </view>
+        <view>
+          <view class="scan-title">{{item.title}}</view>
+          <view class="scan-desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-title">快速文本识别</view>
+    <textarea class="textarea" value="{{content}}" maxlength="1200" bindinput="onInput" placeholder="粘贴可疑聊天内容、短信或链接..." />
+    <view class="privacy-bar">敏感信息将自动脱敏 · 最小化存储 · 本结果仅作风险辅助判断</view>
+    <view class="actions">
+      <button class="ghost-btn action-btn" bindtap="useSample">示例</button>
+      <button class="primary-btn action-btn" loading="{{loadingAnalyze}}" disabled="{{loadingAnalyze}}" bindtap="analyze">开始风险识别</button>
+    </view>
+  </view>
+
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+
+  <view class="section-title-row">
+    <view class="section-title">安全训练闭环</view>
+    <view class="link-text">识别 → 解释 → 训练 → 评估</view>
+  </view>
+  <view class="feature-grid">
+    <view wx:for="{{quickFeatures}}" wx:key="title" class="feature-card panel" data-url="{{item.url}}" bindtap="goFeature">
+      <view class="feature-title">{{item.title}}</view>
+      <view class="feature-desc">{{item.desc}}</view>
+    </view>
+  </view>
+
+  <view class="warning-card">
+    <view class="warning-title">本周易错类型：虚假兼职</view>
+    <view class="warning-body">涉及转账、验证码、屏幕共享、脱离平台交易时，请先核实。系统仅作风险辅助判断，不作法律定性。</view>
+  </view>
+</view>

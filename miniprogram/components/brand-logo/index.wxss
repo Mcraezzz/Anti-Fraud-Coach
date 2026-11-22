@@ -1,0 +1,49 @@
+.brand {
+  display: flex;
+  align-items: center;
+}
+
+.brand-mark {
+  flex: none;
+  width: 80rpx;
+  height: 80rpx;
+  transition: transform 0.3s ease;
+}
+
+.brand:active .brand-mark {
+  transform: scale(0.95);
+}
+
+.brand-mini .brand-mark {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.brand-large .brand-mark {
+  width: 112rpx;
+  height: 112rpx;
+  transition: opacity 0.2s ease;
+}
+
+.brand-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  margin-left: 18rpx;
+}
+
+.brand-name {
+  color: var(--text-main, #0A1628);
+  font-size: 32rpx;
+  font-weight: 600;
+  line-height: 38rpx;
+}
+
+.brand-tagline {
+  margin-top: 4rpx;
+  color: var(--text-secondary, #5A6A82);
+  font-size: 22rpx;
+  line-height: 26rpx;
+  font-weight: 400;
+}

@@ -1,61 +1,71 @@
-# Anti-Fraud Coach：两个项目说明与对比
+# Anti-Fraud Coach
 
-[中文](README.md) | [English](README.en.md)
+新版小程序已接入下载版本的视觉样式与六类情景训练，真实实现位于本目录。启动、数据说明及验证方式见 [新版小程序接入说明](docs/新版小程序接入说明.md)。`Documents/CRAIC` 仅为界面原型。
 
-本仓库同时保存两个独立项目：**微信小程序产品原型**与**Python 校园反诈 RAG 系统**。两者围绕同一反诈主题，但当前没有接通，不能将小程序界面展示理解为已经调用 RAG 算法。
+面向大学生的 AI 反诈情景识别与智能训练系统 MVP。
 
-## 项目一：微信小程序产品原型
+本项目采用“小程序前端 + FastAPI 后端”的结构。后端优先使用规则引擎完成稳定演示，并预留本地模型、OCR、RAG 检索接口；当 `D:\CARIC模型&数据集` 下的模型可用且依赖安装完成后，可以逐步启用更强的 embedding、reranker 和生成模型。
 
-面向大学生的移动端反诈教练，重点展示识别、风险解释、问答、情景训练、能力报告与管理页面的产品流程。
+## 目录结构
 
-- **技术**：微信小程序 JavaScript / WXML / WXSS，Skyline、glass-easel。
-- **入口与目录**：`app.js`、`app.json`、`app.wxss`、`pages/`、`components/`、`assets/`、`styles/`、`utils/`、`project.config.json`。
-- **当前状态**：界面与导航原型；文本、短信和链接文字支持本地关键词筛查，展示实际命中的词语，不输出模型分数或置信度。训练和统计仍为演示数据，未连接真实 OCR、RAG 或模型接口。
-- **预览方式**：用微信开发者工具导入仓库根目录；按需配置 AppID，使用支持 Skyline 的环境。
+```text
+反诈系统/
+  backend/        FastAPI 后端
+  miniprogram/    微信小程序前端
+  docs/           说明文档
+```
 
-详细说明：[微信小程序项目](docs/mini-program.md)。
+## 快速启动后端
 
-## 项目二：校园反诈 RAG 识别与训练系统
+```powershell
+cd C:\Users\22672\Desktop\反诈系统\backend
+python -m pip install -r requirements.txt
+python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+```
 
-面向课程研究与技术验证，处理中文、英文或混合文本，以及经 OCR 提取的图片文字，输出风险分析、检索证据、处置建议和训练问题。
+启动后访问：
 
-- **技术**：Python、Streamlit、Qwen、PaddleOCR、BGE-M3、FAISS、BM25 和 BGE reranker。
-- **入口与目录**：`app.py`、`build_index.py`、`run_demo.py`、`anti_fraud_rag/`、`tests/`、`requirements.txt`。
-- **当前状态**：具有实际检索与模型调用代码；运行需要相应依赖、数据和模型配置。缺少密钥或调用失败时会回退为规则模拟分析。
-- **配套网页**：`webdesign/` 是 React / TypeScript / Vite 设计原型，当前使用模拟数据，尚未连接 Python 引擎；实际 Python 网页入口是 Streamlit `app.py`。
-- **研究材料**：`N&D Report.docx`、`PROJECT_ANALYSIS_REPORT.md`、`参考文献/`、`outputs/` 等。
+- `http://127.0.0.1:8000/health`
+- `http://127.0.0.1:8000/docs`
 
-详细说明及安装、建索引、启动命令：[RAG 项目](docs/rag-project.md)。网页原型运行方法：[webdesign 说明](webdesign/README.md)。
+运行后端测试：
 
-## 两个项目的共同点
+```powershell
+cd C:\Users\22672\Desktop\反诈系统\backend
+python -m pytest -q
+```
 
-- 面向大学生的反诈识别与安全教育，关注短信、聊天、链接等可疑内容。
-- 都体现“识别风险 → 解释风险 → 给出处置建议 → 训练学习”的设计方向。
-- 都重视风险信号和用户可读的解释，能够作为同一反诈产品的不同部分继续开发。
+## 小程序使用
 
-以上是目标与设计层面的共同点，不表示两者已共享同一算法、数据或服务。
+用微信开发者工具导入：
 
-## 两个项目的差异
+```text
+C:\Users\22672\Desktop\反诈系统\miniprogram
+```
 
-| 对比项 | 微信小程序项目 | Python RAG 项目 |
-| --- | --- | --- |
-| 核心定位 | 移动端产品体验与交互展示 | 反诈检索、分析与技术验证 |
-| 主要运行环境 | 微信开发者工具 / 小程序环境 | Python 命令行 / Streamlit 浏览器界面 |
-| 主要语言 | JavaScript、WXML、WXSS | Python；配套网页原型使用 TypeScript / React |
-| 识别过程 | 本地关键词筛查、输入校验与本次匹配结果 | 预处理、风险特征、实体提取、混合检索、生成分析 |
-| OCR | 提供界面入口，尚未接入实际识别 | Streamlit 流程具有 PaddleOCR 接入代码，需准备依赖与模型 |
-| 证据与结果来源 | 输入中命中的本地规则词语；通用建议为预置内容 | 本地知识库、规则与可选 Qwen 调用；存在模拟回退 |
-| 问答和训练 | 问答入口、场景和能力报告的界面展示 | 分析结果可包含训练问题；不等于完整的在线教学平台 |
-| 数据与依赖 | 界面预览无需 Python 模型或索引 | 完整能力依赖本地数据、模型、索引及可选 API 密钥 |
-| 验证重点 | 页面布局、导航与交互流程 | 检索证据、分析输出、OCR 与模型调用行为 |
-| 当前集成状态 | 未调用 Python RAG 引擎 | 未向小程序提供已接通的业务接口；React 原型也未接通 |
+本地调试时请在微信开发者工具中关闭“校验合法域名”，后端地址默认为 `http://127.0.0.1:8000`。
 
-## 仓库结构与运行边界
+## 本地模型目录
 
-两个项目目前共用仓库根目录，但启动方式独立：`app.js` 属于小程序，`app.py` 属于 Python 应用。`webdesign/` 是 RAG 项目的配套界面原型，不是小程序代码，也不是已上线的第三个后端服务。
+默认读取：
 
-上传内容包括源码、配置示例、报告和图表。密钥文件、依赖目录、运行日志、`storage/` 本地索引以及 `downloads/` 第三方安装包不纳入版本控制；外部数据集和模型权重也不随本仓库提供。
+```text
+D:\CARIC模型&数据集
+```
 
-## 后续集成方向（尚未实现）
+当前后端已预留以下模型路径：
 
-可以将 Python 引擎封装为服务接口，再由小程序或 React 网页提交文本/图片并展示分析结果。实现时需要补充接口协议、上传与 OCR 流程、错误处理、访问控制及数据持久化。当前两套项目仍应分别运行、演示和评价。
+- `models\hfl_chinese-macbert-base`
+- `models\BAAI_bge-m3`
+- `models\BAAI_bge-reranker-v2-m3`
+- `models\Qwen_Qwen3-Embedding-0.6B`
+- `models\Qwen_Qwen3-4B-Instruct-2507`
+
+MVP 默认不开启大模型生成，避免普通电脑首次运行卡顿。后续可以在 `backend/app/services/model_service.py` 中接入本地推理或远程 API。
+
+## 当前能力
+
+- 规则引擎支持关键词风险、链接风险、金额风险和组合话术识别。
+- 组合话术包括冒充客服链路、刷单返利链路、贷款陷阱链路。
+- 小程序端展示风险等级、风险分、可信度、风险概览、风险解释和建议。
+- 情景训练包含 10 道题，并输出得分、薄弱类型和能力维度。

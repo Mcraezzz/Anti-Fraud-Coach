@@ -1,0 +1,135 @@
+<view class="result-page">
+  <coach-safe />
+  <view class="compact-header">
+    <view class="inline">
+      <button class="back" bindtap="back"><ui-icon name="chevron-left" tone="slate" /></button>
+      <text class="compact-title">识别结果报告</text>
+    </view>
+    <button class="link inline" bindtap="go" data-url="/pages/detect/index">
+      <ui-icon name="rotate-ccw" size="{{13}}" />
+      重新检测
+    </button>
+  </view>
+  <view wx:if="{{result}}" class="content">
+    <view
+      class="card"
+      style="padding:20px;border-color:{{result.riskLevel==='high'?'#FECACA':result.riskLevel==='medium'?'#FED7AA':'#A7F3D0'}}"
+    >
+      <view style="display: flex; flex-direction: column; align-items: center">
+        <coach-gauge mode="half" score="{{result.riskScore}}" level="{{result.riskLevel}}" />
+        <view
+          class="tag {{result.riskLevel}}"
+          style="font-size: 12px; font-weight: 700; margin-top: 12px"
+        >
+          <ui-icon
+            name="{{result.riskLevel==='high'?'circle-alert':result.riskLevel==='medium'?'triangle-alert':'circle-check'}}"
+            tone="{{result.riskLevel==='high'?'red':result.riskLevel==='medium'?'orange':'green'}}"
+            size="{{14}}"
+          />
+          {{riskLabel}}
+        </view>
+      </view>
+      <view class="row" style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #f1f5f9">
+        <view class="metric">
+          <view class="mini">疑似类型</view>
+          <view class="list-title" style="margin-top: 2px">{{result.scamType}}</view>
+        </view>
+        <view class="metric" style="border-left: 1px solid #f1f5f9">
+          <view class="mini">研判置信度</view>
+          <view class="list-title" style="margin-top: 2px">
+            {{result.confidence===null?'未提供':result.confidence+'%'}}
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{result.signals.length}}" class="card">
+      <view class="section-title inline">
+        <ui-icon name="shield-alert" tone="orange" size="{{16}}" />
+        命中风险特征
+      </view>
+      <text wx:for="{{result.signals}}" wx:key="label" class="tag {{item.severity}}">
+        {{item.label}}
+      </text>
+    </view>
+    <view class="card">
+      <view class="row" style="margin-bottom: 12px">
+        <view class="section-title inline" style="margin: 0">
+          <ui-icon name="file-search" size="{{16}}" />
+          原文风险高亮
+        </view>
+        <text class="mini">点击高亮句段查看拆解</text>
+      </view>
+      <image
+        wx:if="{{result.imagePreview}}"
+        class="preview-image"
+        src="{{result.imagePreview}}"
+        mode="aspectFit"
+      />
+      <view class="source-box body-copy">
+        <text
+          wx:for="{{parts}}"
+          wx:key="key"
+          class="{{item.index>=0?'highlight':''}} {{selected===item.index?'selected':''}}"
+          data-index="{{item.index}}"
+          bindtap="select"
+        >
+          {{item.text}}
+        </text>
+      </view>
+      <view wx:if="{{selectedHighlight}}" class="explanation">
+        <view class="row">
+          <view style="font-size: 12px; font-weight: 700; color: #1e63ff">
+            句段解析 · {{selectedHighlight.tag}}
+          </view>
+          <text class="mini">{{selected+1}} / {{result.highlights.length}}</text>
+        </view>
+        <view class="muted" style="color: #334155; margin-top: 4px">
+          {{selectedHighlight.explanation}}
+        </view>
+        <view
+          wx:if="{{result.highlights.length>1}}"
+          style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #dbeafe"
+        >
+          <button
+            wx:for="{{result.highlights}}"
+            wx:key="quote"
+            data-index="{{index}}"
+            bindtap="select"
+            class="chip"
+            style="min-height:30px;font-size:11px;padding:4px 10px;margin-bottom:6px;background:{{selected===index?'#1E63FF':'#fff'}};color:{{selected===index?'#fff':'#64748B'}}"
+          >
+            {{item.tag}}
+          </button>
+        </view>
+      </view>
+      <view wx:else class="explanation muted">{{result.summaryAnalysis}}</view>
+    </view>
+    <view class="card">
+      <view class="section-title inline">
+        <ui-icon name="shield-check" tone="green" size="{{16}}" />
+        立即采取行动
+      </view>
+      <view class="muted">{{result.summaryAnalysis}}</view>
+      <view wx:for="{{result.actionSteps}}" wx:key="*this" class="action-step">
+        <text class="step-number">{{index+1}}</text>
+        <text>{{item}}</text>
+      </view>
+    </view>
+  </view>
+  <view wx:else class="empty">
+    暂无检测结果
+    <button class="primary" data-url="/pages/detect/index" bindtap="go">前往识别</button>
+  </view>
+  <view wx:if="{{result}}" class="sticky-cta">
+    <button
+      class="primary inline"
+      style="justify-content: center"
+      data-url="/pages/training-detail/index?id={{result.recommendedScenarioId}}"
+      bindtap="go"
+    >
+      <ui-icon name="target" tone="white" size="{{18}}" />
+      <text>进入「{{scenarioTitle}}」情景训练</text>
+      <ui-icon name="arrow-right" tone="white" size="{{16}}" />
+    </button>
+  </view>
+</view>

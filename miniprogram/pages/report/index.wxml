@@ -1,0 +1,85 @@
+<view class="page">
+  <coach-safe />
+  <view class="header">
+    <view class="title">我的反诈能力报告</view>
+    <view class="subtitle">综合风险识别与情景训练表现实时生成</view>
+  </view>
+  <view class="content">
+    <view wx:if="{{error}}" class="error">
+      {{error}}
+      <button class="link" bindtap="load">重试</button>
+    </view>
+    <view wx:if="{{loading}}" class="loading">正在汇总训练表现...</view>
+    <block wx:if="{{report}}">
+      <view class="hero row" style="border-radius: 16px; padding: 20px; margin-bottom: 16px">
+        <view>
+          <view class="muted">综合反诈能力分</view>
+          <view class="number" style="margin-top: 4px">
+            {{report.safetyScore===null?'—':report.safetyScore}}
+          </view>
+          <view class="inline" style="font-size: 12px; color: #dbeafe; margin-top: 6px">
+            <ui-icon name="shield" tone="green" size="{{13}}" />
+            <text>
+              {{report.completed>=4?'校园安全守护官':report.completed>=2?'反诈实战进阶生':'防诈安全新星'}}
+              · Lv.{{report.completed>=5?6:1+report.completed}}
+            </text>
+          </view>
+        </view>
+        <view
+          style=" width: 64px; height: 64px; border: 1px solid #ffffff33; background: #ffffff1a; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; "
+        >
+          <ui-icon name="shield" tone="white" size="{{24}}" />
+          <text style="font-size: 11px; font-weight: 700; margin-top: 4px">
+            {{report.completed}}/6 关
+          </text>
+        </view>
+      </view>
+      <view class="card">
+        <view class="row">
+          <view class="list-title">六维防诈能力雷达</view>
+          <text class="mini">满分 100</text>
+        </view>
+        <canvas id="radar" canvas-id="radar" class="radar" />
+        <view class="mini" style="text-align: center">未练习的维度暂不评估</view>
+      </view>
+      <view class="card" style="padding: 20px">
+        <view class="section-title inline">
+          <ui-icon name="circle-alert" tone="orange" size="{{16}}" />
+          最易错情景排行
+        </view>
+        <view
+          wx:for="{{report.weaknesses}}"
+          wx:key="id"
+          class="rank-row"
+          bindtap="go"
+          data-url="/pages/training-detail/index?id={{item.id}}"
+        >
+          <text class="rank-number {{index===0?'first':''}}">0{{index+1}}</text>
+          <view class="grow">
+            <view class="list-title">{{item.title}}</view>
+            <view class="mini">{{item.category || '情景风险识别'}}</view>
+          </view>
+          <view class="inline muted">
+            <text>{{item.score===null?'未练习':'最近 '+item.score+' 分'}}</text>
+            <ui-icon name="arrow-right" tone="muted" size="{{13}}" />
+          </view>
+        </view>
+        <view class="explanation" style="margin-top: 16px">
+          <view class="list-title blue" style="font-size: 12px">针对性强化建议</view>
+          <view class="muted" style="color: #334155; margin-top: 4px">
+            建议优先完成一次「{{report.weaknesses[0].title}}」对抗训练，巩固识别能力。
+          </view>
+          <button
+            class="chip blue"
+            style="margin-top: 12px; border-color: #bfdbfe; min-height: 40px"
+            bindtap="go"
+            data-url="/pages/training-detail/index?id={{report.weaknesses[0].id}}"
+          >
+            立即强化「{{report.weaknesses[0].title}}」 →
+          </button>
+        </view>
+      </view>
+    </block>
+  </view>
+  <coach-nav active="report" />
+</view>

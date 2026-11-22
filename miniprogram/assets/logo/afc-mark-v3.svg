@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Anti-Fraud Coach minimal logo</title>
+  <desc id="desc">A minimal rounded app mark with a protective shield, verification check, and alert dot.</desc>
+  <defs>
+    <linearGradient id="tile" x1="92" y1="82" x2="420" y2="430" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#081a33"/>
+      <stop offset="0.62" stop-color="#123d77"/>
+      <stop offset="1" stop-color="#1e63ff"/>
+    </linearGradient>
+    <linearGradient id="shield" x1="178" y1="132" x2="334" y2="380" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7db7ff"/>
+      <stop offset="0.56" stop-color="#1e63ff"/>
+      <stop offset="1" stop-color="#21c58b"/>
+    </linearGradient>
+    <filter id="softShadow" x="40" y="40" width="432" height="432" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#0b1f3a" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" fill="none"/>
+  <rect x="42" y="42" width="428" height="428" rx="110" fill="#f5f8ff"/>
+  <rect x="72" y="72" width="368" height="368" rx="88" fill="url(#tile)" filter="url(#softShadow)"/>
+
+  <circle cx="374" cy="146" r="18" fill="#ff9f1c"/>
+  <circle cx="374" cy="146" r="30" fill="none" stroke="#ff9f1c" stroke-width="6" stroke-opacity="0.22"/>
+
+  <path d="M256 118L352 156C347 258 328 324 256 384C184 324 165 258 160 156L256 118Z" fill="url(#shield)" stroke="#f8fbff" stroke-width="14" stroke-linejoin="round"/>
+  <path d="M256 144L326 171C321 248 306 299 256 343C206 299 191 248 186 171L256 144Z" fill="#ffffff" opacity="0.16"/>
+
+  <path d="M213 257L244 288L305 218" fill="none" stroke="#ffffff" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M213 257L244 288L305 218" fill="none" stroke="#21c58b" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

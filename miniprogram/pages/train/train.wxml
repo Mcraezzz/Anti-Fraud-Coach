@@ -1,0 +1,62 @@
+<view class="page">
+  <view class="panel hero camp-card">
+    <brand-logo size="mini" show-name="{{false}}" />
+    <view class="title">反诈训练</view>
+    <view class="subtitle">持续训练，提升风险识别能力</view>
+    <view class="task-bar"><text>今日任务：完成 {{taskTarget}} 个情景挑战</text><text>{{taskStatus}}</text></view>
+  </view>
+
+  <view wx:if="{{error}}" class="error">{{error}}</view>
+  <view wx:if="{{loading}}" class="panel loading-card">正在加载训练题库...</view>
+
+  <view wx:if="{{questions.length}}" class="panel progress-panel">
+    <view class="progress-head"><text>答题进度</text><text>{{answeredCount}} / {{questions.length}}</text></view>
+    <view class="progress-track"><view class="progress-fill" style="width: {{answerProgress}}%;"></view></view>
+    <view class="progress-note">{{canSubmit ? '已完成全部题目，可以提交复盘' : '完成全部题目后再提交，系统会生成薄弱类型'}}</view>
+  </view>
+
+  <view wx:if="{{result}}" class="panel score-panel">
+    <view class="score">{{result.score}}</view>
+    <view class="subtitle">答对 {{result.correct}} / {{result.total}}</view>
+    <view class="section-title small-title">薄弱类型</view>
+    <view wx:if="{{result.weak_types.length}}">
+      <block wx:for="{{result.weak_types}}" wx:key="index"><text class="pill pill-amber">{{item}}</text></block>
+    </view>
+    <view wx:else class="subtitle">本轮没有明显薄弱类型</view>
+  </view>
+
+  <view class="scenario-grid">
+    <view class="scenario-card panel"><view class="scenario-title">刷单返利</view><view class="scenario-level">高频 · 金钱诱导</view></view>
+    <view class="scenario-card panel"><view class="scenario-title">冒充客服</view><view class="scenario-level">中等 · 身份伪装</view></view>
+    <view class="scenario-card panel"><view class="scenario-title">虚假兼职</view><view class="scenario-level">高频 · 保证金</view></view>
+    <view class="scenario-card panel"><view class="scenario-title">游戏交易</view><view class="scenario-level">常见 · 脱离平台</view></view>
+  </view>
+
+  <block wx:for="{{questions}}" wx:key="id">
+    <view id="question-{{item.id}}" class="panel question {{submitAttempted && !answers[item.id] ? 'question-missing' : ''}}">
+      <view class="meta"><text class="pill">{{item.scene}}</text><text class="pill pill-amber">{{item.difficulty}}</text></view>
+      <view class="q-title">{{index + 1}}. {{item.title}}</view>
+      <view class="prompt">{{item.prompt}}</view>
+      <block wx:for="{{item.options}}" wx:for-item="option" wx:key="id">
+        <view class="option {{answers[item.id] == option.id ? 'option-active' : ''}}" data-qid="{{item.id}}" data-oid="{{option.id}}" bindtap="selectOption">
+          <text class="option-key">{{option.id}}</text>
+          <text class="option-text">{{option.text}}</text>
+        </view>
+      </block>
+    </view>
+  </block>
+
+  <button wx:if="{{questions.length}}" class="primary-btn submit-btn" loading="{{submitting}}" disabled="{{submitting}}" bindtap="submit">提交训练（{{answeredCount}}/{{questions.length}}）</button>
+
+  <view wx:if="{{result}}" class="panel">
+    <view class="section-title">复盘</view>
+    <block wx:for="{{result.feedback}}" wx:key="id">
+      <view class="review-item">
+        <view class="review-title">{{item.title}}</view>
+        <view class="{{item.is_correct ? 'ok' : 'bad'}}">{{item.is_correct ? '判断正确' : '需要复盘'}}</view>
+        <view class="review-text">{{item.explanation}}</view>
+        <block wx:for="{{item.risk_points}}" wx:key="index"><text class="pill">{{item}}</text></block>
+      </view>
+    </block>
+  </view>
+</view>

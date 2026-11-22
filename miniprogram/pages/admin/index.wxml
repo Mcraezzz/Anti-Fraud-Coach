@@ -1,0 +1,116 @@
+<view class="no-tab">
+  <coach-safe />
+  <view class="compact-header">
+    <view class="inline">
+      <button class="back" bindtap="back"><ui-icon name="chevron-left" tone="slate" /></button>
+      <view class="compact-title">校园安全数据看板</view>
+    </view>
+    <text class="mini">辅导员工作台</text>
+  </view>
+  <view class="content">
+    <view wx:if="{{!report}}" class="card">
+      <view class="section-title">管理员验证</view>
+      <input
+        class="field"
+        data-field="username"
+        bindinput="input"
+        value="{{username}}"
+        placeholder="管理员账号"
+      />
+      <input
+        class="field"
+        data-field="password"
+        bindinput="input"
+        value="{{password}}"
+        password
+        placeholder="管理员密码"
+      />
+      <button class="primary" bindtap="load" loading="{{busy}}" disabled="{{busy}}">
+        登录并查看
+      </button>
+    </view>
+    <view wx:if="{{error}}" class="error">{{error}}</view>
+    <block wx:if="{{report}}">
+      <view class="grid">
+        <view class="card half">
+          <view class="row">
+            <text class="kpi-label">覆盖设备会话数</text>
+            <ui-icon name="users" size="{{16}}" />
+          </view>
+          <view class="kpi-value">
+            {{report.userCount}}
+            <text class="mini">个</text>
+          </view>
+        </view>
+        <view class="card half">
+          <view class="row">
+            <text class="kpi-label">参训覆盖率</text>
+            <ui-icon name="trending-up" tone="green" size="{{16}}" />
+          </view>
+          <view class="kpi-value">
+            {{report.trainedRate===undefined?'—':report.trainedRate}}
+            <text class="mini">%</text>
+          </view>
+        </view>
+        <view class="card half">
+          <view class="row">
+            <text class="kpi-label">累计风险识别</text>
+            <ui-icon name="shield-alert" tone="orange" size="{{16}}" />
+          </view>
+          <view class="kpi-value">
+            {{report.scanCount}}
+            <text class="mini">次</text>
+          </view>
+        </view>
+        <view class="card half">
+          <view class="row">
+            <text class="kpi-label">识别高危信息</text>
+            <ui-icon name="triangle-alert" tone="red" size="{{16}}" />
+          </view>
+          <view class="kpi-value">
+            {{report.riskCount}}
+            <text class="mini">起</text>
+          </view>
+        </view>
+      </view>
+      <view class="card">
+        <view class="row">
+          <view class="section-title" style="margin: 0">各情景反诈训练完成率</view>
+          <text class="mini">单位：%</text>
+        </view>
+        <view class="bars-chart">
+          <view wx:for="{{report.scenarioCompletion}}" wx:key="id" class="chart-column">
+            <text>{{item.rate}}%</text>
+            <view class="chart-bar" style="height:{{item.rate*1.5}}px;min-height:2px" />
+            <text>{{item.shortTitle}}</text>
+          </view>
+          <view wx:if="{{!report.scenarioCompletion.length}}" class="empty">暂无训练数据</view>
+        </view>
+      </view>
+      <view class="card">
+        <view class="section-title">近期识别高发骗局分布</view>
+        <view wx:if="{{!report.distribution.length}}" class="empty">暂无检测数据</view>
+        <view wx:for="{{report.distribution}}" wx:key="label">
+          <view class="row muted">
+            <text style="font-weight: 600; color: #1e293b">{{item.label}}</text>
+            <text>{{item.count}} 次 · {{item.ratio}}%</text>
+          </view>
+          <view class="bar"><view class="bar-fill" style="width:{{item.ratio}}%" /></view>
+        </view>
+      </view>
+      <view class="card">
+        <view class="section-title">近期风险预警动态</view>
+        <view wx:if="{{!report.recent.length}}" class="empty">暂无活动</view>
+        <view wx:for="{{report.recent}}" wx:key="index" class="list-row">
+          <view class="row mini">
+            <text>{{item.date}}</text>
+            <text class="{{item.score>=70?'high':'medium'}}" style="background: none">
+              {{item.kind==='scan'?'风险识别':'情景训练'}}
+            </text>
+          </view>
+          <view style="font-size: 12px; font-weight: 500; margin-top: 4px">{{item.title}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

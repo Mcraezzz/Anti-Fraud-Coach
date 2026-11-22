@@ -1,0 +1,39 @@
+<view class="no-tab">
+  <coach-safe />
+  <view class="header row">
+    <view>
+      <view class="title">我的识别记录</view>
+      <view class="subtitle">最近 50 条检测结果</view>
+    </view>
+    <button wx:if="{{rows.length}}" class="link" bindtap="clear">清除记录</button>
+  </view>
+  <view class="content">
+    <view wx:if="{{loading}}" class="loading">正在载入记录…</view>
+    <view wx:if="{{error}}" class="error">
+      {{error}}
+      <button class="link" bindtap="load">重试</button>
+    </view>
+    <view wx:if="{{!loading && !error && !rows.length}}" class="empty">
+      还没有识别记录。
+      <button
+        class="primary"
+        data-url="/pages/detect/index"
+        bindtap="go"
+        style="width: 100%; margin-left: 0; margin-right: 0"
+      >
+        开始第一次检测
+      </button>
+    </view>
+    <view wx:for="{{rows}}" wx:key="id" class="card" data-id="{{item.id}}" bindtap="open">
+      <view class="row">
+        <view class="list-title">{{item.scamType}}</view>
+        <text class="tag {{item.riskLevel}}">{{item.level}} · {{item.riskScore}}</text>
+      </view>
+      <view class="subtitle">{{item.date}}</view>
+      <view class="body-copy" style="max-height: 104rpx; overflow: hidden; margin-top: 16rpx">
+        {{item.extractedText}}
+      </view>
+      <view class="link">查看分析与建议 ›</view>
+    </view>
+  </view>
+</view>

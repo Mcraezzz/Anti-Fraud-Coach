@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Anti-fraud shield icon light</title>
+  <desc id="desc">A light rounded square icon with a shield, stylized A mark, and verification check.</desc>
+  <defs>
+    <linearGradient id="bg" x1="82" y1="64" x2="942" y2="960" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#eaf6ff"/>
+      <stop offset="0.58" stop-color="#dff1ff"/>
+      <stop offset="1" stop-color="#cfe7fb"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="246" y1="240" x2="758" y2="834" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0078ff"/>
+      <stop offset="0.46" stop-color="#1ebfec"/>
+      <stop offset="1" stop-color="#20d0f1"/>
+    </linearGradient>
+    <linearGradient id="shield" x1="255" y1="164" x2="810" y2="642" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#006cff"/>
+      <stop offset="0.52" stop-color="#0b82ff"/>
+      <stop offset="1" stop-color="#14bfff"/>
+    </linearGradient>
+    <linearGradient id="check" x1="458" y1="636" x2="812" y2="492" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1ac9fb"/>
+      <stop offset="0.48" stop-color="#007dff"/>
+      <stop offset="1" stop-color="#1186ff"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1024" height="1024" rx="166" fill="url(#bg)"/>
+
+  <path
+    d="M512 165C585 227 686 272 808 293L808 474L766 509L766 332C674 313 587 279 512 223C437 279 350 313 258 332L258 474C258 525 270 564 293 597L263 642C232 596 216 540 216 474L216 293C338 272 439 227 512 165Z"
+    fill="url(#shield)"
+  />
+
+  <path
+    d="M178 812L314 812L512 230L686 535L598 613L512 459L314 812L178 812Z"
+    fill="url(#mark)"
+  />
+
+  <path
+    d="M458 619C521 622 571 648 598 675L812 490L598 780C561 714 512 658 458 619Z"
+    fill="url(#check)"
+  />
+
+  <path
+    d="M669 728L743 812L854 812L743 616L669 728Z"
+    fill="url(#mark)"
+  />
+</svg>

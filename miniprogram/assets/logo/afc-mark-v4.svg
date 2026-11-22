@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Anti-Fraud Coach guardian logo</title>
+  <desc id="desc">A minimal abstract person holding a protective shield.</desc>
+  <defs>
+    <linearGradient id="tile" x1="92" y1="82" x2="420" y2="430" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#081a33"/>
+      <stop offset="0.6" stop-color="#123d77"/>
+      <stop offset="1" stop-color="#1e63ff"/>
+    </linearGradient>
+    <linearGradient id="person" x1="154" y1="126" x2="242" y2="346" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f8fbff"/>
+      <stop offset="1" stop-color="#7db7ff"/>
+    </linearGradient>
+    <linearGradient id="shield" x1="208" y1="130" x2="364" y2="390" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7db7ff"/>
+      <stop offset="0.54" stop-color="#1e63ff"/>
+      <stop offset="1" stop-color="#21c58b"/>
+    </linearGradient>
+    <filter id="softShadow" x="40" y="40" width="432" height="432" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#0b1f3a" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" fill="none"/>
+  <rect x="42" y="42" width="428" height="428" rx="110" fill="#f5f8ff"/>
+  <rect x="72" y="72" width="368" height="368" rx="88" fill="url(#tile)" filter="url(#softShadow)"/>
+
+  <g opacity="0.98">
+    <circle cx="186" cy="154" r="32" fill="url(#person)"/>
+    <path d="M150 335C154 272 162 218 188 202C214 218 224 272 228 335H150Z" fill="url(#person)" opacity="0.88"/>
+    <path d="M206 214C226 190 253 176 286 170" fill="none" stroke="#dce7ff" stroke-width="20" stroke-linecap="round"/>
+    <circle cx="286" cy="170" r="11" fill="#dce7ff"/>
+  </g>
+
+  <path d="M286 126L374 160C369 264 350 329 286 386C222 329 203 264 198 160L286 126Z" fill="url(#shield)" stroke="#f8fbff" stroke-width="14" stroke-linejoin="round"/>
+  <path d="M286 152L348 176C343 254 329 303 286 345C243 303 229 254 224 176L286 152Z" fill="#ffffff" opacity="0.16"/>
+
+  <path d="M250 260L278 288L329 226" fill="none" stroke="#ffffff" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M250 260L278 288L329 226" fill="none" stroke="#21c58b" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

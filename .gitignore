@@ -1,11 +1,19 @@
-.env
-.venv/
 __pycache__/
-*.pyc
-.streamlit/secrets.toml
-storage/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+node_modules/
+dist/
+build/
 *.log
+.DS_Store
+Thumbs.db
+backend/app/data/coach.sqlite3*
 
-
-# Local third-party application downloads
-downloads/
+.env
+.env.*
+!/.env.example
+project.private.config.json
+backend/app/data/accounts.json
+backend/app/data/rag_index/

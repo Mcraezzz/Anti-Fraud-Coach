@@ -1,0 +1,14 @@
+<view class="nav">
+  <view
+    wx:for="{{items}}"
+    wx:key="id"
+    class="item {{active===item.id?'selected':''}}"
+    role="button"
+    aria-label="{{item.label}}"
+    data-id="{{item.id}}"
+    bindtap="open"
+  >
+    <ui-icon name="{{item.icon}}" tone="{{active===item.id?'blue':'muted'}}" size="{{20}}" />
+    <text>{{item.label}}</text>
+  </view>
+</view>
