@@ -17,3 +17,8 @@ backend/app/data/coach.sqlite3*
 project.private.config.json
 backend/app/data/accounts.json
 backend/app/data/rag_index/
+
+# Local resources retained from the coursework checkout
+/downloads/
+/storage/
+!/coursework/.env.example

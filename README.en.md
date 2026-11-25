@@ -1,17 +1,26 @@
-# Anti-Fraud Coach
+# Anti-Fraud Coach: Two Projects and Their Comparison
 
-[简体中文](README.md) · English
+[中文](README.md) | [English](README.en.md)
+
+This repository preserves two independent implementations: the **updated WeChat Mini Program with a FastAPI backend** and the **campus anti-fraud RAG coursework project**. The updated Mini Program calls its own backend, not `coursework/anti_fraud_rag/`. Install, run, and manage data for each project separately.
+
+## Project Navigation
+
+- **Project 1: Mini Program application** — `miniprogram/`, `backend/`, and `web-preview/`; features and startup instructions are below.
+- **Project 2: Coursework RAG system** — [English guide](coursework/README.en.md) / [中文](coursework/README.md), including the Python core, Streamlit, React UI prototype, tests, reports, and references.
+
+## Project 1: Updated WeChat Mini Program and FastAPI Backend
 
 Anti-Fraud Coach is a WeChat Mini Program that helps university students recognize scams and practice responding to them. A student who receives a job offer demanding an upfront deposit can paste the message, inspect the phrases that triggered the warning, and try the fake job scenario to decide what to do next.
 
-## Features
+### Features
 
 - **Risk detection** accepts chat text, SMS messages, links, and screenshots. Local OCR extracts text from screenshots. The results show the risk level, highlighted passages, and suggested next steps.
 - **Questions and answers** retrieve guidance from a campus fraud prevention knowledge base and show the sources alongside each answer. The service retrieves evidence separately for each question.
 - **Scenario training** covers fake jobs, task rebate scams, customer service impersonation, gaming trade scams, campus loan scams, and impersonation of acquaintances. The backend scores each choice. A report tracks six skill dimensions and marks those the student has yet to practice.
 - **History and administration** store scan history, training progress, and privacy preferences per device session. Administrators can view aggregate scan activity and training completion.
 
-## Run in WeChat DevTools
+### Run in WeChat DevTools
 
 Open PowerShell at the repository root. These commands start the FastAPI backend with keyword-based retrieval and load OCR on demand.
 
@@ -28,8 +37,34 @@ Open the [health check](http://127.0.0.1:8000/api/coach/health) and confirm that
 
 To test on a phone, change the server's bind address to `0.0.0.0` and connect the phone and computer to the same local network. Under **我的 → 系统偏好设置 → 个人资料与后端连接设置**, enter the computer's LAN address and port, for example `http://192.168.1.20:8000`.
 
-## Data and models
+### Data and models
 
 The Mini Program calls the backend through `/api/coach`. By default the service stores device sessions and activity in `backend/app/data/coach.sqlite3`. Set `ANTI_FRAUD_COACH_DB` to choose a different database location. Clearing the Mini Program's local storage removes access to the original device session.
 
 Screenshot analysis requires a local OCR runtime and model files. To enable semantic retrieval, install the model dependencies, point `ANTI_FRAUD_RESOURCE_ROOT` to the resource directory containing the `models` subdirectory, set `ANTI_FRAUD_SEMANTIC_RAG` to `1`, and restart the backend. [Model dependencies](backend/requirements-models.txt) · [Retrieval configuration (Chinese)](docs/RAG语义检索说明.md) · [Integration and testing guide (Chinese)](docs/新版小程序接入说明.md)
+
+## Project 2: Coursework RAG System
+
+A bilingual anti-fraud analysis and coursework implementation using Python, Streamlit, BM25, BGE-M3, FAISS, BGE reranking, PaddleOCR, and optional Qwen API calls. It analyzes text and OCR-extracted image content, returning risk features, evidence, advice, and training questions. `coursework/webdesign/` is a React design prototype using mock data and is not connected to the Python engine.
+
+From the repository root, run `cd coursework`, follow the [technical guide](coursework/docs/rag-project.en.md) to install dependencies, configure dataset/model paths, and build indexes, then run `streamlit run app.py`. Missing credentials or failed API calls can trigger rule-based simulated analysis; `--mock` still requires local retrieval dependencies.
+
+## Similarities and Differences
+
+Both target fraud awareness and education for university students, emphasizing risk signals, evidence-based explanations, recommended actions, and training. Both include OCR and knowledge retrieval implementations. Shared technology names do not imply shared code, indexes, or data.
+
+| Aspect | Project 1: Updated Mini Program | Project 2: Coursework RAG |
+| --- | --- | --- |
+| Purpose | User-facing recognition, Q&A, training, and history workflows | Coursework research and retrieval/generation experiments |
+| Main entry points | WeChat Mini Program calling FastAPI `/api/coach` | Streamlit `app.py` and CLI `run_demo.py` |
+| Code location | `miniprogram/`, `backend/` | `coursework/` |
+| Frontend/backend connection | Mini Program implements calls to its own backend | Streamlit directly uses the coursework engine; React prototype is unconnected |
+| Retrieval | Its own knowledge base, lexical retrieval, and optional semantic retrieval configuration | BM25 + BGE-M3/FAISS, IOC matching, fusion, and reranking |
+| Model configuration | `ANTI_FRAUD_*` environment variables and local model resources | Dataset/model paths and Qwen API settings in `.env.example` |
+| Training and history | Backend scoring, device sessions, progress, and SQLite activity records | Training questions in analysis output, with emphasis on structured results and research materials |
+| Storage | Default `backend/app/data/coach.sqlite3` | Default `coursework/storage/rag_index`; no shared application database |
+| Preview UI | `web-preview/` | `coursework/webdesign/`, using mock data |
+| Relationship | Starts independently of the coursework project | Does not call the updated Mini Program service; runs independently |
+
+Source, example configuration, tests, reports, figures, and references are included. Dependencies, secrets, runtime databases, logs, local indexes, third-party installers, external model weights, and datasets are not bundled.
+
